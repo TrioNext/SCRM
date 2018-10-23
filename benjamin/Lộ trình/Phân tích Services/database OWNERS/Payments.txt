@@ -1,0 +1,22 @@
+
+DB payments
+	- relationship with 
+
+
+- id
+- code
+- name 
+- type 	[tm-ck]
+- status
+- is_deleted
+
+- company_id
+- creator_id
+- deleted_by
+
+- date_created
+- date_modified
+- date_deleted
+
+
+
