@@ -11,6 +11,15 @@ module.exports = function (options = {}) {
     const paginate = context.app.get('paginate');
     
     
+    const query = {
+      p:0,
+      max,
+      sort_by,
+      sort_type
+    }
+
+    console.log(context.params.query)
+    
     return context;
   };
 };
