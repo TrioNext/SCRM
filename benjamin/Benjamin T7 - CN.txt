@@ -1,0 +1,45 @@
+
+Benjamin schedule :  T7 - CN
+----------------------------
+
+- 05:30 : NHANH NHẸN - THÂN THỦ BẤT PHÀM 
+        - Thể dục 
+        - Thiền định
+
+- 07:15 : Lên mục tiêu ngày
+
+- 08-30 : Chiến đấu mục tiêu
+
+- 12:00 : Ăn trưa 
+        
+- 13:00 : Nghĩ trưa 
+
+- 14:00 : DỨT ĐIỂM MỤC TIÊU
+        - Làm tỉnh táo 
+        - Tiếp tục mục tiêu 
+
+- 18:30 : Đi chơi ? return : T2-T6
+        - Set Input thông tin đi chơi
+        - Get value sau khi về
+       
+- 19:30 : Đi chơi ? return : T2-T6
+        - Set thông tin đi chơi ?
+        - Get value sau khi về ?
+
+- 20:30 : Đi chơi ? return : T2-T6
+        - Set input thông tin đi chơi ?
+        - Get value sau khi về ? 
+
+- 21:00 : Đi chơi ? return : T2-T6
+        - Set input thông tin đi chơi ?
+        - Get value sau khi về ? 
+
+- 23:15 :  Đi chơi ? return : T2-T6
+        - Set input thông tin đi chơi ?
+        - Get value sau khi về ? 
+        
+- 23:45 : Ngũ
+
+
+
+
