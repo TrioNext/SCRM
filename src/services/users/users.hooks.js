@@ -9,7 +9,7 @@ const defaultParams = require('../../hooks/default-params');
 module.exports = {
   before: {
     all: [],
-    find: [  defaultParams(),],
+    find: [ authenticate('jwt'), defaultParams(),],
     get: [ ],
     create: [hashPassword(),],
     update: [ hashPassword(),  authenticate('jwt') ],
