@@ -4,13 +4,13 @@ const {
   hashPassword, protect
 } = require('@feathersjs/authentication-local').hooks;
 
-const defaultParams = require('../../hooks/default-params');
+const filterOnGetFind = require('../../hooks/filter-on-get-find');
 
 module.exports = {
   before: {
     all: [],
-    find: [ authenticate('jwt'), defaultParams(),],
-    get: [ ],
+    find: [authenticate('jwt')],
+    get: [ filterOnGetFind() ],
     create: [hashPassword(),],
     update: [ hashPassword(),  authenticate('jwt') ],
     patch: [ hashPassword(),  authenticate('jwt') ],
