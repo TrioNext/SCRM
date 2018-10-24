@@ -1,46 +1,42 @@
 
-Benjamin schedule :  T2 - T6
+Benjamin schedule :  T2 - T6 ====== 
 ----------------------------
 
-- 05:30 : NHANH NHẸN - THÂN THỦ BẤT PHÀM 
-        - Thể dục 
+- 05:30 : NHANH NHẸN - THÂN THỦ BẤT PHÀM
+        - Thể dục
         - Thiền định
 
 - 07:15 : Lên mục tiêu ngày
 
 - 08-30 : Chiến đấu mục tiêu
 
-- 12:00 : Ăn trưa 
+- 12:00 : Ăn trưa
 
-- 13:00 : Nghĩ trưa 
+- 13:00 : Nghĩ trưa
 
-- 13:30 : THÔNG MINH : DỨT ĐIỂM MỤC TIÊU 
+- 13:30 : THÔNG MINH : DỨT ĐIỂM MỤC TIÊU
         - Làm tỉnh táo
 
-- 18:30 : Ăn tối 
+- 18:30 : Ăn tối
 
-- 19:30 : NHANH NHẸ - THÂN THỦ BẤT PHÀM : 
-        - Làm tỉnh táo 
-        - Khởi động 
-        - Chạy bộ 
-        - Tập đùi, bụng - Tắm 
+- 19:30 : NHANH NHẸ - THÂN THỦ BẤT PHÀM :
+        - Làm tỉnh táo
+        - Khởi động
+        - Chạy bộ
+        - Tập đùi, bụng - Tắm
 
-- 20:30 : ĐẸP TRAI  - THẦN THÁI KHÍ CHẤT :  
-        - Thiền định + Chăm sóc 
+- 20:30 : ĐẸP TRAI  - THẦN THÁI KHÍ CHẤT :
+        - Thiền định + Chăm sóc
 
-- 21:00 : THÔNG MINH - DỨT ĐIỂM MỤC TIÊU :[ Ngày ]  
-        21:00      
-        + Get more : FeathersJS - NextJS - ReactJS 
-        
-        22:30 - 23:15  
-        + Train Ghitar 
+- 21:00 : THÔNG MINH - DỨT ĐIỂM MỤC TIÊU :[ Ngày ]
+        21:00
+        + Get more : FeathersJS - NextJS - ReactJS
+
+        22:30 - 23:15
+        + Train Ghitar
 
 - 23:15 : KIÊN NHẪN - TÍCH LUỸ GIÁ TRỊ
-        - Viết daily xem lại bản thân 
-        - Viết daily xem lại mục tiêu 
-        
+        - Viết daily xem lại bản thân
+        - Viết daily xem lại mục tiêu
+
 - 23:45 : Ngũ
-
-
-
-
