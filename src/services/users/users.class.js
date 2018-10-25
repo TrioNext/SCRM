@@ -1,60 +1,53 @@
-/*
-cURL 	
-		GET : 
-			/employees
-			+ Params 
-			- p		: 0
-			- max		: 10
-			- sort_by		: id
-			- sort_type	: default : ASC
-            - region_id	: null 
-            - subregion_id : null
-			- is_delete	: default : 0
-			- key		: null
-            - status		: null // [0:vắng - 1: có mặt - 2: nghĩ phép có tính công - 3: nghĩ phép ko tính công - 4: nghĩ việc]
-            - job_level : null 
-                    /*
-                    - Mới tốt nghiệp 
-                    - Thực tập 
-                    - Nhân viên	
-                    - Trưởng nhóm /  Giám sát
-                    - Quản lý cửa hàng
-                    - Trợ lý quản lý cửa hàng
-                    - Trưởng phòng
-                    - Phó phòng
-                    - Giám đốc
-                    - Phó giám đốc
-                    - Giám đốc điều hành
-                    - Chủ tịch
-                    
-            - job_type : null 
-                    - NV Chính thức
-                    - Bán thời gian
-                    - Thử việc
-                    - Làm thêm ngoài giờ
-                    - Nhân viên thời vụ
-                    - Làm dự án
-            - is_affiliated : null              
-             
+/* cURL
+		GET
+      - /           method find(params)  : custom
+      - /{id}       method get(id,params): custom
+    POST
+      - /authentication           method authenticate() : default
+      - /                         method create() : custom
+    PUT
 
-			/employess/info?{id}
-		POST : 
-			/employees/create
-			+ Params
-		
-			/employees/update
-			+ Params
-
-		DELETE : 
-			/employees/{id}
+    DEL
 */
 
 const { Service } = require( 'feathers-sequelize');
 const mUser = require('../../models/users.model');
 
-class User extends Service {
-    
+const Helper = require('../../models/helper');
 
+class User extends Service {
+
+    setup(app){
+      this.app = app;
+    }
+
+
+    basicSchema(query){
+
+      const paginate = this.paginate;
+
+      query.p = query.p || 0 ;
+      query.max = query.max || paginate.max ;
+      query.sort_by =  query.sort_by || 'id';
+      query.sort_type = query.sort_type || 'desc';
+
+
+      query.basicQuery = {
+          order:[
+            [ query.sort_by || 'id' , query.sort_type || 'desc' ]
+          ],
+          offset: parseInt(query.p),
+          limit: parseInt(query.max)
+      };
+
+      delete query.p ;
+      delete query.max ;
+      delete query.sort_by ;
+      delete query.sort_type ;
+
+      return query ;
+
+    }
     whereSchema(query){
 
         const basic = query.basicQuery;
@@ -68,56 +61,72 @@ class User extends Service {
 
     }
 
-    test(){
-        return 'test';
-    }
-
+    /* method used in FIND */
     async read(params){
 
-        const query = params.query;
-        const fullSchema = this.whereSchema(query);
-        const list = await this.Model.findAndCountAll(fullSchema); 
-        
+        let basicSchema = this.basicSchema(params.query);
+        const fullSchema =    this.whereSchema(basicSchema);
+        const list = await this.Model.findAndCountAll(fullSchema);
+
+
         return list;
 
-
     }
-    
 
-    async get(id,params){
-        
-        console.log(Number.isInteger(parseInt(id)));
-        
-        let results ;
-        if(!Number.isInteger(parseInt(id))){
-            results =  this[id](params);
-        }else{  
-             
-            delete params.query;
-            results = await super.get(id,params) 
+    /* METHOD CRUD */
+    /* cURL: GET */
+    async find(params){
+
+      const query = params.query;
+      return query.$limit !== undefined ?  super.find(params) : await this.read(params) ;
+    }
+
+
+
+    /* cURL : END GET  */
+
+
+
+    /* cURL POST */
+    async create(id,data,params){
+
+        const json = {
+          json:JSON.stringify({
+            name:Helper.khongdau(data.name),
+            address:Helper.khongdau(data.address)
+          })
         }
 
-        return results; 
-                        
+        Object.assign(data,json)
+
+        return this.Model.create(data);
+    }
+
+    async update(id,data,params){
+
+       return this.Model.update(data,{
+         where:{
+           id:id
+         }
+       });
 
     }
-    async remove(id, data, params ){
+
+    /* cURL : DELETE */
+    async remove(id, params ){
 
         const delData = {
-            is_deleted:true
+          is_deleted:0
         }
-        return await this.Model.update(delData,{
-            where: {
-                id: {
-                  $eq: id
-                }
-            }
-        });
 
-        //return params;
-
+        return this.Model.update(delData,{
+          where:{
+            id:id
+          }
+        })
     }
 
+    /* END CRUD METHOD */
 
   }
 
