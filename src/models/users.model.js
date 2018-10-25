@@ -6,19 +6,19 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function (app) {
 
-  // config Database 
+  // config Database
   const sequelize = app.get('sequelizeClient');
 
-  // define table object 
+  // define table object
   const users = sequelize.define('users',{
-     
+
      id:{
         type:DataTypes.INTEGER,
         primaryKey:true,
         autoIncrement:true,
         allowNull: false,
         unique: true
-        
+
      },
      username:{
         type:DataTypes.STRING,
@@ -34,9 +34,9 @@ module.exports = function (app) {
           notEmpty:{
             args:true,
             msg:"Vui lòng nhập tên"
-          }, 
+          },
           len: [4,40]
-          
+
         }
      },
      password:{
@@ -46,7 +46,7 @@ module.exports = function (app) {
           notEmpty:{
             args:true,
             msg:"Vui lòng nhập mật khẩu"
-          }, 
+          },
           len:{
             args: [4,200],
             msg:' Vui lòng nhập mật khẩu : ít nhất là 4 ký tự'
@@ -55,11 +55,11 @@ module.exports = function (app) {
      },
      job_level:{
         type:DataTypes.TINYINT,
-        defaultValue:2 
+        defaultValue:2
         /*
-        - Mới tốt nghiệp 
+        - Mới tốt nghiệp
         - Thực tập
-        - Nhân viên	
+        - Nhân viên
         - Trưởng nhóm /  Giám sát
         - Quản lý cửa hàng
         - Trợ lý quản lý cửa hàng
@@ -87,11 +87,8 @@ module.exports = function (app) {
       type:DataTypes.TINYINT,
       defaultValue:0, /* Thành viên sale liên kết  */
     },
-    is_leader:{
-      type:DataTypes.TINYINT,
-      defaultValue:0 
-    },
-    
+
+
     is_leader:{
       type:DataTypes.TINYINT,
       defaultValue:0
@@ -105,7 +102,7 @@ module.exports = function (app) {
       defaultValue:0
     },
     collections_tags:{
-      type:DataTypes.TEXT,   //[phòng ban - chức vụ - office - company - store]	
+      type:DataTypes.TEXT,   //[phòng ban - chức vụ - office - company - store]
       allowNull:true,
       defaultValue:null
     },
@@ -117,7 +114,7 @@ module.exports = function (app) {
       type:DataTypes.INTEGER,
       defaultValue:0
     },
-    
+
     company_id:{
       type:DataTypes.INTEGER,
       defaultValue:0
@@ -163,8 +160,16 @@ module.exports = function (app) {
     },
     address:{
       type:DataTypes.STRING,
-      allowNull:true,
-      defaultValue:null
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:"Vui lòng nhập địa chỉ"
+        },
+        len: [4,100]
+
+      }
+
     },
     region_id:{
       type:DataTypes.INTEGER,
@@ -215,15 +220,22 @@ module.exports = function (app) {
     json:{
       type:DataTypes.TEXT,
       allowNull:true,
-      defaultValue:null
+      defaultValue:null,
+      get(){
+        var json = this.getDataValue('json');
+        json = json !== null ? json : '{}';
+
+         // 'this' allows you to access attributes of the instance
+        return JSON.parse(json);
+      }
     }
 
   })
 
-  
+
 
   return users;
 
 
-  
+
 };
