@@ -10,7 +10,7 @@ module.exports = {
   before: {
     all: [],
     find: [authenticate('jwt')],
-    get: [ filterOnGetFind() ],
+    get: [ authenticate('jwt') ],
     create: [hashPassword(),],
     update: [ hashPassword(),  authenticate('jwt') ],
     patch: [ hashPassword(),  authenticate('jwt') ],
