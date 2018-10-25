@@ -9,7 +9,7 @@ const events = require('./users.events');
 
 
 module.exports = function (app) {
-  
+
 
   /* ROUTE : /users */
   app.use('/users',serviceUser({app})) ;
