@@ -10,7 +10,8 @@ module.exports = function (app) {
   const sequelize = app.get('sequelizeClient');
 
   // define table object
-  const offices = sequelize.define('offices',{
+  const offices = sequelize.define('offices',
+    {
 
      id:{
         type:DataTypes.INTEGER,
@@ -23,8 +24,12 @@ module.exports = function (app) {
      code:{
         type:DataTypes.STRING,
         allowNull:false,
+        unique: {
+            args: true,
+            msg: 'Email address already in use!'
+        },
         set(val){
-          this.setDataValue('username',val.toLowerCase())
+          this.setDataValue('code',val.toLowerCase())
         }
      },
      name:{
@@ -101,21 +106,22 @@ module.exports = function (app) {
        allowNull: true
      },
      working_begin:{
-
+       type:DataTypes.TIME,
+       allowNull:true
      },
      working_end:{
-
+       type:DataTypes.TIME,
+       allowNull:true
      },
 
-    latetime_allowed:{
-
-    },
-    earlytime_allowed:{
-
-    },
-
-    lat:{},
-    lng:{},
+     lat:{
+       type:DataTypes.FLOAT,
+       defaultValue:0
+     },
+     lng:{
+       type:DataTypes.FLOAT,
+       defaultValue:0
+     },
     address:{
       type:DataTypes.STRING,
       allowNull:false,
@@ -150,7 +156,8 @@ module.exports = function (app) {
       }
     },
     fax:{
-
+      type:DataTypes.STRING,
+      allowNull:true
     },
 
     json:{
@@ -166,9 +173,9 @@ module.exports = function (app) {
       }
     }
 
-  })
-
-
+  },
+    { indexes: [ { unique: true, fields: [ 'code' ] } ] },
+  )
 
   return offices;
 
