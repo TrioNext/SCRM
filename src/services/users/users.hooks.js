@@ -6,7 +6,7 @@ const {
 
 const filterOnGetFind = require('../../hooks/filter-on-get-find');
 
-module.exports = {
+module.exports = { 
   before: {
     all: [],
     find: [authenticate('jwt')],
