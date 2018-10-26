@@ -52,6 +52,8 @@ class User extends Service {
 
         const basic = query.basicQuery;
         delete query.basicQuery;
+        query.is_deleted === undefined ? Object.assign(query,{ is_deleted:0 }) :  '';
+        
         const where = {
             where: {
                 $and: query
@@ -88,7 +90,7 @@ class User extends Service {
 
 
     /* cURL POST */
-    async create(id,data,params){
+    async create(data,params){
 
         const json = {
           json:JSON.stringify({
@@ -116,7 +118,7 @@ class User extends Service {
     async remove(id, params ){
 
         const delData = {
-          is_deleted:0
+          is_deleted:1
         }
 
         return this.Model.update(delData,{
