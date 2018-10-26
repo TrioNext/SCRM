@@ -1,22 +1,22 @@
-// Initializes the `offices` service on path `/offices`
-const createService = require('feathers-sequelize');
-const createModel = require('../../models/offices.model');
+// Initializes the `users` service on path `/users`
+
+/* THIS USER SERVICE OBJECT : WORKINHG WITH DATABASE  */
+const serviceOffice = require('./offices.class');
+
 const hooks = require('./offices.hooks');
+const events = require('./offices.events');
+
+
 
 module.exports = function (app) {
-  const Model = createModel(app);
-  const paginate = app.get('paginate');
 
-  const options = {
-    Model,
-    paginate
-  };
 
-  // Initialize our service with any options it requires
-  app.use('/offices', createService(options));
+  /* ROUTE : /users */
+  app.use('/offices',serviceOffice({app})) ;
 
-  // Get our initialized service so that we can register hooks
   const service = app.service('offices');
-
   service.hooks(hooks);
+
+
+
 };
