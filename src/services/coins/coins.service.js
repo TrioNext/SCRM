@@ -1,22 +1,18 @@
-// Initializes the `coins` service on path `/coins`
-const createService = require('feathers-sequelize');
-const createModel = require('../../models/coins.model');
+
+const iRoute = require('./coins.class');
 const hooks = require('./coins.hooks');
+const events = require('./coins.events');
 
-module.exports = function (app) {
-  const Model = createModel(app);
-  const paginate = app.get('paginate');
 
-  const options = {
-    Model,
-    paginate
-  };
+module.exports = function(app){
 
-  // Initialize our service with any options it requires
-  app.use('/coins', createService(options));
+  /* set route */
+  app.use('/coins', iRoute({app}))
 
-  // Get our initialized service so that we can register hooks
+  /* set hook */
   const service = app.service('coins');
+  service.hooks(hooks)
 
-  service.hooks(hooks);
-};
+  /* SET EVENT*/
+
+}
