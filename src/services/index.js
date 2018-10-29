@@ -9,6 +9,15 @@ const payments = require('./payments/payments.service.js');
 const customers = require('./customers/customers.service.js');
 const collections = require('./collections/collections.service.js');
 const coins = require('./coins/coins.service.js');
+const cointracks = require('./cointracks/cointracks.service.js');
+const inventories = require('./inventories/inventories.service.js');
+const inventorytracks = require('./inventorytracks/inventorytracks.service.js');
+const products = require('./products/products.service.js');
+const orders = require('./orders/orders.service.js');
+const suppliers = require('./suppliers/suppliers.service.js');
+const purchases = require('./purchases/purchases.service.js');
+const marketings = require('./marketings/marketings.service.js');
+const websites = require('./websites/websites.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -22,4 +31,13 @@ module.exports = function (app) {
   app.configure(customers);
   app.configure(collections);
   app.configure(coins);
+  app.configure(cointracks);
+  app.configure(inventories);
+  app.configure(inventorytracks);
+  app.configure(products);
+  app.configure(orders);
+  app.configure(suppliers);
+  app.configure(purchases);
+  app.configure(marketings);
+  app.configure(websites);
 };
