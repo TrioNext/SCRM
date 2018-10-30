@@ -127,8 +127,14 @@ module.exports = function (app) {
      /* [ thiết lập cách sắp xếp trang chủ, các thiết lập khác ] */
      settings:{
        type:DataTypes.TEXT('tiny'),
+       allowNull:true,
        defaultValue:null,
-       allowNull:true
+       get(){
+         var json = this.getDataValue('json');
+         json = json !== null ? json : '{}';
+           // 'this' allows you to access attributes of the instance
+         return JSON.parse(json);
+       }
      },
      /* basic NCC - basic store - inventory	 */
     json:{
