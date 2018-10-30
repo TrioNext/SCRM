@@ -21,6 +21,33 @@ class Helper {
 
     }
 
+    /* fuction trả về phần tử trùng nhau */
+    arr_intersection(arr1,arr2){
+      return arr1.filter(x => arr2.includes(x));
+    }
+
+    /* tra về phần tử khác nhau : của arra1 */
+    arr_diff(arr1,arr2){
+      return arr1.filter(x => !arr2.includes(x));
+
+    }
+
+    /* function : compare : schema fields table default must have [] */
+    isPassedSchema(schema,data){
+      let ret = '';
+      const filters =   this.arr_diff(schema,data);
+
+      if(filters.length>0){
+
+          filters.forEach((item)=>{
+            ret += item+', ';
+          })
+
+      }
+      return ret;
+
+    }
+
 }
 
 module.exports = new Helper()
