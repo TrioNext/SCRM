@@ -97,6 +97,8 @@ module.exports = function (app) {
        defaultValue:0
      },
 
+     
+
      date_created:{
        type:'TIMESTAMP',
        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
