@@ -70,6 +70,11 @@ module.exports = function (app) {
        type:DataTypes.INTEGER,
        defaultValue:0
      },
+     webtheme_id:{
+       type:DataTypes.INTEGER,
+       defaultValue:0
+     },
+
 
      deleted_by:{
        type:DataTypes.INTEGER,
