@@ -26,7 +26,7 @@ module.exports = function (app) {
         allowNull:false,
         unique: {
             args: true,
-            msg: 'Email address already in use!'
+            msg: 'Code already in use!'
         },
         set(val){
           this.setDataValue('code',val.toLowerCase())
