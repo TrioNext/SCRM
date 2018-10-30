@@ -19,6 +19,10 @@ const purchases = require('./purchases/purchases.service.js');
 const marketings = require('./marketings/marketings.service.js');
 
 const webthemes = require('./webthemes/webthemes.service.js');
+const mailthemes = require('./mailthemes/mailthemes.service.js');
+const landingpages = require('./landingpages/landingpages.service.js');
+const blogs = require('./blogs/blogs.service.js');
+const brandnames = require('./brandnames/brandnames.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -40,6 +44,10 @@ module.exports = function (app) {
   app.configure(suppliers);
   app.configure(purchases);
   app.configure(marketings);
-  
+
   app.configure(webthemes);
+  app.configure(mailthemes);
+  app.configure(landingpages);
+  app.configure(blogs);
+  app.configure(brandnames);
 };
