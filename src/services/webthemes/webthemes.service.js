@@ -1,22 +1,12 @@
-// Initializes the `webthemes` service on path `/webthemes`
-const createService = require('feathers-sequelize');
-const createModel = require('../../models/webthemes.model');
+const iRoute = require('./webthemes.class');
 const hooks = require('./webthemes.hooks');
+const events = require('./webthemes.events');
 
-module.exports = function (app) {
-  const Model = createModel(app);
-  const paginate = app.get('paginate');
+module.exports = function(app){
 
-  const options = {
-    Model,
-    paginate
-  };
-
-  // Initialize our service with any options it requires
-  app.use('/webthemes', createService(options));
-
-  // Get our initialized service so that we can register hooks
+  app.use('/webthemes',iRoute({app}));
   const service = app.service('webthemes');
 
   service.hooks(hooks);
-};
+
+}
