@@ -1,18 +1,11 @@
-/* cURL
-		GET
-      - /           method find(params)  : custom
-      - /{id}       method get(id,params): custom
-    POST
-      - /authentication           method authenticate() : default
-      - /                         method create() : custom
-    PUT
 
-    DEL
-*/
-
+/* feathers DB supporter */
 const { Service } = require( 'feathers-sequelize');
+
+/* DB schema for filter IN - OUT */
 const mUser = require('../../models/users.model');
 
+/* CUSTOM helper guy */
 const Helper = require('../../models/helper');
 
 class User extends Service {
@@ -53,7 +46,7 @@ class User extends Service {
         const basic = query.basicQuery;
         delete query.basicQuery;
         query.is_deleted === undefined ? Object.assign(query,{ is_deleted:0 }) :  '';
-        
+
         const where = {
             where: {
                 $and: query
@@ -92,16 +85,30 @@ class User extends Service {
     /* cURL POST */
     async create(data,params){
 
-        const json = {
-          json:JSON.stringify({
-            name:Helper.khongdau(data.name),
-            address:Helper.khongdau(data.address)
-          })
+        let ret  = {
+          message:"",
+          errors:[]
+
         }
 
-        Object.assign(data,json)
 
-        return this.Model.create(data);
+        /* hooked befor and get err data  */
+        if(data.err===''){
+          const json = {
+            json:JSON.stringify({
+              name:Helper.khongdau(data.name),
+              address:Helper.khongdau(data.address)
+            })
+          }
+          Object.assign(data,json);
+
+          ret = this.Model.create(data);
+
+
+        }else{ ret.message = data.err; }
+
+        return ret ;
+
     }
 
     async update(id,data,params){
@@ -132,19 +139,11 @@ class User extends Service {
 
   }
 
-  /* options : app - hook - event */
-  module.exports = function (options) {
-    const app = options.app;
+  module.exports = function (app) {
+
     const Model = mUser(app);
     const paginate = app.get('paginate');
-
-    const sequelize = {
-        Model,
-        paginate
-    }
-
-
-    return new User(sequelize);
+    return new User({Model,paginate});
 
   };
 
