@@ -6,12 +6,14 @@ const {
 
 const filterOnGetFind = require('../../hooks/filter-on-get-find');
 
-module.exports = { 
+const usersCreated = require('../../hooks/users-created');
+
+module.exports = {
   before: {
     all: [],
     find: [authenticate('jwt')],
     get: [ authenticate('jwt') ],
-    create: [hashPassword(),],
+    create: [hashPassword(), usersCreated()],
     update: [ hashPassword(),  authenticate('jwt') ],
     patch: [ hashPassword(),  authenticate('jwt') ],
     remove: [ authenticate('jwt') ]
