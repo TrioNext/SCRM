@@ -1,16 +1,3 @@
-/*
-DEPARTMENTS
-cURL
-		GET
-      - /           method find(params)  : custom
-      - /{id}       method get(id,params): custom
-    POST
-      - /authentication           method authenticate() : default
-      - /                         method create() : custom
-    PUT
-
-    DEL
-*/
 
 const { Service } = require( 'feathers-sequelize');
 const mModel = require('../../models/blogs.model');
