@@ -85,15 +85,15 @@ class User extends Service {
     /* cURL POST */
     async create(data,params){
 
-        let ret  = {
+        /*let ret  = {
           message:"",
           errors:[]
-
         }
 
 
-        /* hooked befor and get err data  */
+
         if(data.err===''){
+
           const json = {
             json:JSON.stringify({
               name:Helper.khongdau(data.name),
@@ -101,13 +101,11 @@ class User extends Service {
             })
           }
           Object.assign(data,json);
-
           ret = this.Model.create(data);
 
+        }else{ ret.message = data.err; }*/
 
-        }else{ ret.message = data.err; }
-
-        return ret ;
+        return this.Model.create(data); 
 
     }
 
