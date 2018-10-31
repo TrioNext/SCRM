@@ -1,0 +1,1 @@
+/* THIS IS STUPID OBJECT : WORKING AS key WHERE principle */
