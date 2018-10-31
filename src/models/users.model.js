@@ -35,7 +35,10 @@ module.exports = function (app) {
             args:true,
             msg:"Vui lòng nhập tên"
           },
-          len: [4,40]
+          len: {
+            args:[4,40],
+            msg:" Tên tối thiểu 4 ký tự"
+          }
 
         }
      },
