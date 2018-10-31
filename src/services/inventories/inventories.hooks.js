@@ -1,11 +1,15 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 
+const dataInCreated = require('../../hooks/data-in-created');
+
+const generateJsonField = require('../../hooks/generate-json-field');
+
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [],
+    create: [dataInCreated(), generateJsonField()],
     update: [],
     patch: [],
     remove: []
