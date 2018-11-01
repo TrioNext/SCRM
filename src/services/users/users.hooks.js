@@ -4,39 +4,52 @@ const {
   hashPassword, protect
 } = require('@feathersjs/authentication-local').hooks;
 
-const dataInCreated = require('../../hooks/data-in-created');
+const Helper = require('../../models/helper');
 
+/* METHOD GET HOOKED -> GET Default SCHEMA QUERY DATABASE*/
+const getInSchema = require('../../hooks/get-in-schema');
+
+/* THE GUY : HOOKED POST [helper - [fields] ] -> return error: thiếu fields table mặc định  */
+const postInSchema = require('../../hooks/post-in-schema');
+const putInSchema = require('../../hooks/put-in-schema');
+const putInAction = require('../../hooks/put-in-action');
+
+
+
+/* THIS GUY deteted USERINFO in app object : set || get  */
+const hookUserInfo = require('../../hooks/hooked-userinfo');
+
+/* generate json fields by : passing schema needed */
 const generateJsonField = require('../../hooks/generate-json-field');
+
+
+
 
 module.exports = {
   before: {
-    all: [],
-    find: [authenticate('jwt')],
-    get: [ authenticate('jwt') ],
+    all: [
+      authenticate('jwt')
+
+    ],
+    find: [getInSchema({Helper})],
+    get: [],
     create: [
       hashPassword(),
-      dataInCreated({schema:['username', 'name', 'password', 'address', 'email']}),
-      generateJsonField({ schema :['name','address'] })
+      postInSchema({Helper,schema:['username', 'name', 'password', 'address', 'email']}), /* this guy return err: on missing Default field */
+      generateJsonField({ Helper ,schema :['name','address'] })
+      //dataInCreated({schema:['username', 'name', 'password', 'address', 'email']}),
+
     ],
-    update: [ hashPassword(),  authenticate('jwt') ],
-    patch: [ hashPassword(),  authenticate('jwt') ],
-    remove: [ authenticate('jwt') ]
+    update: [ hashPassword(),putInSchema(),putInAction()  ],
+    patch: [ hashPassword() ],
+    remove: [ ]
   },
 
   after: {
     all: [protect('password')],
     find: [],
     get: [],
-    create: [ function(context){
-        context.data = {
-            "name": "success",
-            "message": "Đã tạo thành công",
-            "data": {}
-        }
-
-
-        return context;
-    }],
+    create: [],
     update: [],
     patch: [],
     remove: []
@@ -46,11 +59,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [
-      function(context){
-        console.log('co bien xay ra '+context.error);
-      }
-    ],
+    create: [],
     update: [],
     patch: [],
     remove: []
