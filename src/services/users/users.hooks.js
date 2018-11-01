@@ -11,13 +11,13 @@ const getInSchema = require('../../hooks/get-in-schema');
 
 /* THE GUY : HOOKED POST [helper - [fields] ] -> return error: thiếu fields table mặc định  */
 const postInSchema = require('../../hooks/post-in-schema');
+const postInPluginField = require('../../hooks/post-in-plugin-field');
+
 const putInSchema = require('../../hooks/put-in-schema');
 const putInAction = require('../../hooks/put-in-action');
 
 
 
-/* THIS GUY deteted USERINFO in app object : set || get  */
-const hookUserInfo = require('../../hooks/hooked-userinfo');
 
 /* generate json fields by : passing schema needed */
 const generateJsonField = require('../../hooks/generate-json-field');
@@ -29,14 +29,14 @@ module.exports = {
   before: {
     all: [
       authenticate('jwt')
-
     ],
     find: [getInSchema({Helper})],
     get: [],
     create: [
       hashPassword(),
       postInSchema({Helper,schema:['username', 'name', 'password', 'address', 'email']}), /* this guy return err: on missing Default field */
-      generateJsonField({ Helper ,schema :['name','address'] })
+      generateJsonField({ Helper ,schema :['name','address'] }),
+      postInPluginField()
       //dataInCreated({schema:['username', 'name', 'password', 'address', 'email']}),
 
     ],
