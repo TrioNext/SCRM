@@ -16,9 +16,6 @@ const postInPluginField = require('../../hooks/post-in-plugin-field');
 const putInSchema = require('../../hooks/put-in-schema');
 const putInAction = require('../../hooks/put-in-action');
 
-
-
-
 /* generate json fields by : passing schema needed */
 const generateJsonField = require('../../hooks/generate-json-field');
 
@@ -35,8 +32,8 @@ module.exports = {
     create: [
       hashPassword(),
       postInSchema({Helper,schema:['username', 'name', 'password', 'address', 'email']}), /* this guy return err: on missing Default field */
-      generateJsonField({ Helper ,schema :['name','address'] }),
-      postInPluginField()
+      generateJsonField({ Helper ,schema :['username','name','address'] }), // This guy create json field stringify
+      postInPluginField() // this guy : add field default : [creator_id - company_id] to data for save
       //dataInCreated({schema:['username', 'name', 'password', 'address', 'email']}),
 
     ],
