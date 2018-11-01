@@ -33,11 +33,11 @@ class User extends Service {
     /* cURL POST */
     async create(data,params){
 
-        
+
         /* GOT HOOKED BEFOR :-> APP DATA_OUT*/
         let data_out = this.app.get('data_out');
         data_out.data = data_out.name==='success' ?  await this.Model.create(data) : data_out.data ;
-
+        
         return data_out;
 
     }
