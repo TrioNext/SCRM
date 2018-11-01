@@ -47,7 +47,7 @@ $noExtendLeft: [1, 2]  // &> [1, 2) (PG range does not extend to the left of ope
     }
   }
   // rank < 1000 OR rank IS NULL
-  
+
   {
     createdAt: {
       $lt: new Date(),
@@ -55,7 +55,7 @@ $noExtendLeft: [1, 2]  // &> [1, 2) (PG range does not extend to the left of ope
     }
   }
   // createdAt < [timestamp] AND createdAt > [timestamp]
-  
+
   {
     $or: [
       {
@@ -151,4 +151,3 @@ something.findOne({
   order: 'username DESC'
   order: sequelize.literal('convert(user_name using gbk)')
 })
-
