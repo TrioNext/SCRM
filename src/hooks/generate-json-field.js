@@ -1,21 +1,23 @@
 
 /*
-  THIS IS A SIMPLE GUY : ON PRINCIPLE : WHERE AT
-  DETECTED DATA IN ON POST CREATE DATABASE
-  USING : HELPER
-  MUST HAVE DATA DEFAULT : options = { schema:[ field1, field2 ] }
-  RETURN data.err
+  THIS GUY :
+  - FOLLOW GET IN DATA SCHEMA : TO GET ERROR ON APP Object
+  - continue do action for generate JSON field
+  method params :  HELPER - SCHEMA FOR JSON FIELDS
+  - RETURN HOOK DATA.JSON
 */
 
-
-const Helper = require('../models/helper');
 
 module.exports = function (options = {}) {
   return async context => {
 
+    const Helper = options.Helper;
+
     let {data} = context ;
-    
-    if(context.error.toString() ==='true'){
+
+    const data_out = context.app.get('data_out');
+
+    if(data_out.name ==='success'){
 
        const schema = options.schema || ['field'];
        let obj = `{`;
