@@ -58,7 +58,7 @@ module.exports = function (app) {
      },
 
      /* đơn hàng của nhân vien này */
-     user_id:{
+     creator_id:{
        type:DataTypes.INTEGER,
        defaultValue:0
      },
