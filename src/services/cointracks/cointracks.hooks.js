@@ -1,18 +1,45 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 
-const dataInCreated = require('../../hooks/data-in-created');
 
-const generateJsonField = require('../../hooks/generate-json-field');
+const Helper = require('../../models/helper');
+
+/* BEFORE : HTTP GET */
+      const getInSchema = require('../../hooks/before/get-in-schema'); // -> GET Default SCHEMA QUERY DATABASE
+
+/*          HTTP POST */
+      const postInSchema = require('../../hooks/before/post-in-schema');
+      const generateJsonField = require('../../hooks/before/generate-json-field');
+      const postInPluginField = require('../../hooks/before/post-in-plugin-field');
+
+/*          HTTP: PUT */
+      const putInSchema = require('../../hooks/before/put-in-schema');
+      const putInAction = require('../../hooks/before/put-in-action');
+      const putInPluginField = require('../../hooks/before/put-in-plugin-field');
+
+
+/*          HTTP: DELETE */
+      const delInSchema = require('../../hooks/before/del-in-schema');
+
 
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
-    find: [],
+    find: [getInSchema({Helper})],
     get: [],
-    create: [dataInCreated(), generateJsonField()],
-    update: [],
+    create: [
+
+      postInPluginField() // this guy : add field default : [creator_id - company_id] to data for save
+    ],
+    update: [
+
+      putInSchema(), /* this guy format params query as object condition for update  */
+      putInAction(), /* this guy return to call a method  */
+      putInPluginField(['date_modified']) /*  this gus add field : date_modified -   */
+    ],
     patch: [],
-    remove: []
+    remove: [
+      delInSchema() /*  this gus add field : date_deleleted - deleted_by -   */
+    ]
   },
 
   after: {
