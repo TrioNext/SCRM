@@ -76,6 +76,11 @@ module.exports = function (app) {
        defaultValue:0
      },
 
+     deleted_by:{
+       type:DataTypes.INTEGER,
+       defaultValue:0
+     },
+
      /* [] JSON : list all company being used this themes		 */
      list_website_use:{
        type:DataTypes.TEXT,
@@ -95,9 +100,21 @@ module.exports = function (app) {
        allowNull: true
      },
 
-     date_deleted:{
+     date_created:{
        type:'TIMESTAMP',
        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+       allowNull: true
+     },
+
+     date_modified:{
+       type:'TIMESTAMP',
+       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+       allowNull: true
+     },
+
+     date_deleted:{
+       type:'TIMESTAMP',
+       defaultValue: null,
        allowNull: true
      },
 
