@@ -87,7 +87,7 @@ module.exports = function (app) {
 
      date_deleted:{
        type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+       defaultValue: null,
        allowNull: true
      },
 
