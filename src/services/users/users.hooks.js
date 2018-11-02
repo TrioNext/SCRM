@@ -6,20 +6,23 @@ const {
 
 const Helper = require('../../models/helper');
 
-/* METHOD GET HOOKED -> GET Default SCHEMA QUERY DATABASE*/
-const getInSchema = require('../../hooks/get-in-schema');
+/* BEFORE : HTTP GET */
+      const getInSchema = require('../../hooks/before/get-in-schema'); // -> GET Default SCHEMA QUERY DATABASE
 
-/* THE GUY : HOOKED POST [helper - [fields] ] -> return error: thiếu fields table mặc định  */
-const postInSchema = require('../../hooks/post-in-schema');
-const postInPluginField = require('../../hooks/post-in-plugin-field');
+/*          HTTP POST */
+      const postInSchema = require('../../hooks/before/post-in-schema');
+      const generateJsonField = require('../../hooks/before/generate-json-field');
+      const postInPluginField = require('../../hooks/before/post-in-plugin-field');
 
-const putInSchema = require('../../hooks/put-in-schema');
-const putInAction = require('../../hooks/put-in-action');
+/*          HTTP: PUT */
+      const putInSchema = require('../../hooks/before/put-in-schema');
+      const putInAction = require('../../hooks/before/put-in-action');
+      const putInPluginField = require('../../hooks/before/put-in-plugin-field');
 
-/* generate json fields by : passing schema needed */
-const generateJsonField = require('../../hooks/generate-json-field');
 
+/*          HTTP: DELETE */
 
+      const delInSchema = require('../../hooks/before/del-in-schema');
 
 
 module.exports = {
@@ -34,12 +37,17 @@ module.exports = {
       postInSchema({Helper,schema:['username', 'name', 'password', 'address', 'email']}), /* this guy return err: on missing Default field */
       generateJsonField({ Helper ,schema :['username','name','address'] }), // This guy create json field stringify
       postInPluginField() // this guy : add field default : [creator_id - company_id] to data for save
-      //dataInCreated({schema:['username', 'name', 'password', 'address', 'email']}),
+
 
     ],
-    update: [ hashPassword(),putInSchema(),putInAction()  ],
+    update: [
+      hashPassword(),
+      putInSchema(), /* this guy format params query as object condition for update  */
+      putInAction(), /* this guy return to call a method  */
+      putInPluginField(['date_modified']) /*  this gus add field : date_modified -   */
+    ],
     patch: [ hashPassword() ],
-    remove: [ ]
+    remove: [ delInSchema() /*  this gus add field : date_deleleted - deleted_by -   */ ]
   },
 
   after: {
