@@ -57,7 +57,7 @@ module.exports = function (app) {
        type:DataTypes.TINYINT,
        defaultValue:0
      },
-     user_id:{
+     creator_id:{
        type:DataTypes.INTEGER,
        defaultValue:0
      },
