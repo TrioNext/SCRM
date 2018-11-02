@@ -25,10 +25,7 @@ class User extends Service {
       return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
     }
-
     /* cURL : END GET  */
-
-
 
     /* cURL POST */
     async create(data,params){
@@ -37,7 +34,7 @@ class User extends Service {
         /* GOT HOOKED BEFOR :-> APP DATA_OUT*/
         let data_out = this.app.get('data_out');
         data_out.data = data_out.name==='success' ?  await this.Model.create(data) : data_out.data ;
-        
+
         return data_out;
 
     }
@@ -45,8 +42,8 @@ class User extends Service {
     async test(data,params){
 
       return {
-        name:"",
-        message:"",
+        name:"callmethod",
+        message:"calling method",
         data:{}
 
       }
@@ -61,10 +58,10 @@ class User extends Service {
       ret = isUpdate;
       const isMethod = this.app.get('method_schema');
 
-
       if(isMethod.name==='success'){
          ret =  this[isMethod.method](data,params);
       }else{
+
           ret.data = await this.Model.update(data,isUpdate.condition)
       }
 
@@ -77,15 +74,19 @@ class User extends Service {
     /* cURL : DELETE */
     async remove(id, params ){
 
-        const delData = {
-          is_deleted:1
-        }
 
-        return await this.Model.update(delData,{
+
+        /* be hooked before => data for update*/
+        const idata = this.app.get('data_del');
+
+
+        idata.data =  await this.Model.update(idata.data,{
           where:{
-            id:id
+            id:idata.id
           }
-        })
+        });
+
+        return idata;
     }
 
     /* END CRUD METHOD */
