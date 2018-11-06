@@ -87,7 +87,7 @@ module.exports = function (app) {
 
      date_deleted:{
        type:'TIMESTAMP',
-       defaultValue: null,
+       defaultValue: 0,
        allowNull: true
      },
 
