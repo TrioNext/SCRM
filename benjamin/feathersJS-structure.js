@@ -3,7 +3,11 @@
 	- Load main object : app.js
 	- use main object : as a web server : listening for request
 
-	app.js : Cài đặt - thiết lập
+	app.js : Cài đặt - thiết lập :  NHÂN VẬT CHÍNH LÀ :
+  SERVICES : sử dụng 2 đối tượng bên dưới phối hợp : thông qua trung gian : main object APP 
+    EVENTS : tuỳ biến phát tín hiệu giao tiếp với clients
+    HOOKS : kiểm soát : data BEFORE -> AFTER : done a request from client
+
 	- load all lib object : ready for using them
 	- config các object này để trở thành 1 web server
 
@@ -28,5 +32,5 @@
 		-> thiết lập socket - database object - channel
 		-> thiết lập : trình quản lý lỗi
 		-> thiết lập hooks :
-    
+
 */
