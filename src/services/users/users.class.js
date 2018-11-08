@@ -6,6 +6,11 @@ const mUser = require('../../models/users.model');
 
 class User extends Service {
 
+
+    constructor(options) {
+      super(options)
+      this.events = ['test'];
+    }
     setup(app,path){
       this.app = app;
 
@@ -20,7 +25,7 @@ class User extends Service {
       const query = params.query;
       const schema = this.app.get('temp_get_in_schema');
 
-
+      this.emit('test',{status:'ok good'})
 
       return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
@@ -34,6 +39,8 @@ class User extends Service {
         /* GOT HOOKED BEFOR :-> APP DATA_OUT*/
         let data_out = this.app.get('data_out');
         data_out.data = data_out.name==='success' ?  await this.Model.create(data) : data_out.data ;
+
+
 
         return data_out;
 
