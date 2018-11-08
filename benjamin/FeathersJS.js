@@ -1,7 +1,7 @@
 /* *******************************************************************************************
  * FEATHERS.JS CHEATSHEET
  * https://docs.feathersjs.com/api/readme.html
- * 
+ *
  * 1. CORE: Feathers core functionality.
  * 2. TRANSPORT: Expose a Feathers application as an API server.
  * 3. CLIENT: More details on how to use Feathers on the client.
@@ -96,12 +96,33 @@ app.use('/my-service', new MyService());
 const myService = app.service('my-service');
 
 myService.hooks(hooks)                             // register hooks for this service
+
+/* https://docs.feathersjs.com/api/events.html */
 myService.publish([event,], publisher)             // register an event publishing callback
 myService.mixin(mixin)                             // extends the functionality of a service
-myService.on(eventname, listener)                  // registers a listener method for the given eventname
-myService.once(eventname, listener)                // registers a listener method for the given eventname that will be triggered only one time
-myService.emit(eventname, data)                    // emits the event eventname to all event listeners
-myService.removeListener(eventname, [ listener ])  // removes all listeners (or the given listener) for eventname
+
+/*  --> EVENT <--  ****************************************************************
+
+mặc định của feathersJS : created - updated - patched - removed
+myService.on(eventname, listener)
+myService.once(eventname, listener) */
+
+myService.on('created',(data)=>{
+   do somethong on server
+});
+
+/* EVENT customer :  event này chỉ gủi cho client nhận : không có tác dụng ở server
+myService.emit(eventname, data)
+*/
+
+myService.emit('tested',{
+  type:'customEvent',
+  data:'benjamin has writed'
+})
+
+
+myService.removeListener(eventname, [ listener ])
+/* --> END EVENTS <-- *************************************************************/
 
 // --> HOOKS <--
 // https://docs.feathersjs.com/api/hooks.html
@@ -159,10 +180,22 @@ context.dispatch  // [writable and optional] contains a "safe" version of the da
 // --> CHANNELS <--
 // https://docs.feathersjs.com/api/channels.html
 
-// A channel is an object that contains a number of connections.
-// It can be created via app.channel and allows a connection to join or leave it.
-app.channel(name)                     // when given a single name, returns an existing or new named channel
-app.channel(name1, name2, ... nameN)  // when given multiples names, will return a combined channel.
+/* CHANNEL  : app.channel('name','name2','name3'...).join(connection)
+- Channel là những room tập hợp, các user có có join vào để nhận thông tin
+- mặc định có 2 room bên ngoài được tạo ra : anonymous - authenticated : để cho feathers client sử dụng
+    + tất cả các service events mặc định :  service.on('created || update || patched || removed ',(data)=>{}) sẽ đước phát ra tín hiệu đến rooms này
+    + sẽ được chỉ định public vào 1 trong 2 room này
+    + ta có thể chủ động định nghĩa lại public vào room tuỳ ý
+    service.public('event',(data,context)=>{
+       return [
+       app.channel('authenticate'), // room chung, room cụ thể
+       app.channel(app.channels).filter(connection =>       // room cá nhận người phát tin hiệu
+          connection.user._id === context.params.user._id
+       )
+
+     ]
+  })
+*/
 app.channels                          // returns a list of all existing channel names
 
 channel.join(connection)      // adds a connection to this channel
@@ -365,7 +398,7 @@ app.on('logout', callback))  // emits an event whenever a client successfully lo
 const options = {
   path: '/authentication',    // the server-side authentication service path
   header: 'Authorization',    // the default authorization header for REST
-  jwtStrategy: 'jwt',         // the name of the JWT authentication strategy 
+  jwtStrategy: 'jwt',         // the name of the JWT authentication strategy
   entity: 'user',             // the entity you are authenticating (ie. a users)
   service: 'users',           // the service to look up the entity
   cookie: 'feathers-jwt',     // the name of the cookie to parse the JWT from when cookies are enabled server side
@@ -409,7 +442,7 @@ const options = {
 app.configure(authentication(options));
 app.configure(local());
 
-// Setup a hook to only allow valid JWTs or successful 
+// Setup a hook to only allow valid JWTs or successful
 // local auth to authenticate and get new JWT access tokens
 app.service('authentication').hooks({
   before: {

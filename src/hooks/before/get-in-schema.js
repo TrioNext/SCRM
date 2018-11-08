@@ -65,9 +65,7 @@ module.exports = function (options = {}) {
            }
       };
        const schema = Object.assign({},where,basic);
-
-       console.log(schema);
-
+       
        context.app.set('temp_get_in_schema',schema);
 
        /* END FULL SCHEMA */
