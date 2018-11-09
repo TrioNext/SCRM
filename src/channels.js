@@ -14,7 +14,7 @@ module.exports = function(app) {
     // real-time connection, e.g. when logging in via REST
     if(connection) {
       // Obtain the logged in user from the connection
-      // const user = connection.user;
+       const user = connection.user;
 
       console.log(connection);
       // The connection is no longer anonymous, remove it
