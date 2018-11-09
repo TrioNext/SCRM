@@ -14,7 +14,7 @@ module.exports = function(app) {
     // real-time connection, e.g. when logging in via REST
     if(connection) {
       // Obtain the logged in user from the connection
-      // const user = connection.user;
+       const user = connection.user;
 
       // The connection is no longer anonymous, remove it
       app.channel('anonymous').leave(connection);
@@ -32,7 +32,7 @@ module.exports = function(app) {
       if(Array.isArray(user.rooms)) user.rooms.forEach(room => app.channel(`rooms/${room.id}`).join(channel));
 
       // Easily organize users by email and userid for things like messaging
-       app.channel(`emails/${user.email}`).join(channel);
+      // app.channel(`emails/${user.email}`).join(channel);
       // app.channel(`userIds/$(user.id}`).join(channel);
     }
   });
