@@ -16,6 +16,7 @@ module.exports = function(app) {
       // Obtain the logged in user from the connection
       // const user = connection.user;
 
+      console.log(connection);
       // The connection is no longer anonymous, remove it
       app.channel('anonymous').leave(connection);
 
@@ -29,10 +30,10 @@ module.exports = function(app) {
 
       // If the user has joined e.g. chat rooms
 
-      if(Array.isArray(user.rooms)) user.rooms.forEach(room => app.channel(`rooms/${room.id}`).join(channel));
+      //if(Array.isArray(user.rooms)) user.rooms.forEach(room => app.channel(`rooms/${room.id}`).join(channel));
 
       // Easily organize users by email and userid for things like messaging
-       app.channel(`emails/${user.email}`).join(channel);
+      // app.channel(`emails/${user.email}`).join(channel);
       // app.channel(`userIds/$(user.id}`).join(channel);
     }
   });
