@@ -11,7 +11,7 @@ module.exports = function (app) {
 
   // define table object
   const departments = sequelize.define('departments',
-    {
+      {
 
      id:{
         type:DataTypes.INTEGER,
@@ -23,7 +23,24 @@ module.exports = function (app) {
      },
      code:{
        type:DataTypes.STRING,
-       allowNull:false
+       allowNull:false,
+       unique: true,
+       validate:{
+         notEmpty:{
+           args:true,
+           msg:"Vui lòng nhập mã"
+         },
+         len: {
+           args:[4,30],
+           msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
+         },
+
+       },
+       set(val){
+
+         const com_id = this.getDataValue()
+         this.setDataValue('code',val.toLowerCase())
+       }
      },
 
 
@@ -33,9 +50,13 @@ module.exports = function (app) {
         validate:{
           notEmpty:{
             args:true,
-            msg:"Vui lòng nhập tên công ty"
+            msg:"Vui lòng nhập tên"
           },
-          len: [4,40]
+          len: {
+            args:[4,120],
+            msg:'Tên bộ phận giới hạn trong khoảng [4,120] ký tự'
+          },
+
 
         }
      },
@@ -95,8 +116,26 @@ module.exports = function (app) {
       }
     }
 
-  }
+  },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['code']
+            }
+        ]
+      },
+      {
+        hooks: {
+              beforeValidate: function (data, options) {
+                  if (typeof data.code === 'string') {
+                      data.code = data.code.toLowerCase().trim();
+                  }
 
+
+              }
+          }
+      }
   )
 
   return departments
