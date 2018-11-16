@@ -21,26 +21,42 @@ module.exports = function (app) {
         unique: true
 
      },
+
      code:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        unique: {
-            args: true,
-            msg: 'Code already in use!'
+      type:DataTypes.STRING,
+      allowNull:false,
+      unique: true,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:"Vui lòng nhập mã"
         },
-        set(val){
-          this.setDataValue('code',val.toLowerCase())
-        }
+        len: {
+          args:[4,30],
+          msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
+        },
+
+      },
+      set(val){
+
+        const com_id = this.getDataValue()
+        this.setDataValue('code',val.toLowerCase())
+      }
      },
+     
      name:{
         type:DataTypes.STRING,
         allowNull:false,
         validate:{
+          
           notEmpty:{
             args:true,
-            msg:"Vui lòng nhập tên văn phòng"
+            msg:"Vui lòng nhập tên"
           },
-          len: [4,40]
+          len: {
+            args:[4,120],
+            msg:'Tên bộ phận giới hạn trong khoảng [4,120] ký tự'
+          },
 
         }
      },
@@ -174,7 +190,25 @@ module.exports = function (app) {
     }
 
   },
-    { indexes: [ { unique: true, fields: [ 'code' ] } ] },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['code']
+            }
+        ]
+      },
+      {
+        hooks: {
+              beforeValidate: function (data, options) {
+                  if (typeof data.code === 'string') {
+                      data.code = data.code.toLowerCase().trim();
+                  }
+
+
+              }
+          }
+      }
   )
 
   return offices;
