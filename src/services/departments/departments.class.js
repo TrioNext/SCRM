@@ -29,6 +29,8 @@ class iRoute extends Service {
       const query = params.query;
       const schema = this.app.get('temp_get_in_schema');
 
+      console.log(schema);
+
       return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
     }
