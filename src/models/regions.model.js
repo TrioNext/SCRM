@@ -23,7 +23,15 @@ module.exports = function (app) {
 
      code:{
        type:DataTypes.STRING,
-       defaultValue:0
+       unique: true,
+       validate:{
+         notEmpty:{
+           args:true,
+           msg:"Vui lòng nhập mã"
+         }
+
+
+       }
      },
      /* mã vùng TP */
 
@@ -40,9 +48,22 @@ module.exports = function (app) {
         }
      },
 
+     slug:{
+        type:DataTypes.STRING,
+        allowNull:true,
+        defaultValue:null
+     },
+
+     name_with_type:{
+       type:DataTypes.STRING,
+       allowNull:true,
+       defaultValue:null
+     },
+
      type:{
-       type:DataTypes.TINYINT,
-       defaultValue:1
+       type:DataTypes.STRING,
+       allowNull:true,
+       defaultValue:null
      },
 
 
@@ -68,9 +89,6 @@ module.exports = function (app) {
        defaultValue:0
      },
 
-     
-
-
     json:{
       type:DataTypes.TEXT,
       allowNull:true,
@@ -84,7 +102,15 @@ module.exports = function (app) {
       }
     }
 
-  }
+  },
+  {
+    indexes: [
+        {
+            unique: true,
+            fields: ['code']
+        }
+    ]
+  },
 
   )
 
