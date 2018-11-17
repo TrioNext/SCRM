@@ -28,7 +28,7 @@ module.exports = {
     get: [],
     create: [
 
-      postInSchema({Helper,schema:['region_id','code', 'name']}), /* this guy return err: on missing Default field */
+      postInSchema({Helper,schema:['parent_code','code', 'name']}), /* this guy return err: on missing Default field */
       generateJsonField({ Helper ,schema :['code', 'name'] }), // This guy create json field stringify
 
     ],
