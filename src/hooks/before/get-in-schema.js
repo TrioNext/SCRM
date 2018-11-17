@@ -24,6 +24,7 @@ module.exports = function (options = {}) {
       query.sort_type = query.sort_type || 'desc';
 
 
+
       query.basicQuery = {
           order:[
             [ query.sort_by || 'id' , query.sort_type || 'desc' ]
@@ -31,6 +32,8 @@ module.exports = function (options = {}) {
           offset: parseInt(query.p),
           limit: parseInt(query.max)
       };
+
+      query.max === 'all' ? delete query.basicQuery.limit : '';
 
       delete query.p ;
       delete query.max ;
@@ -65,7 +68,7 @@ module.exports = function (options = {}) {
            }
       };
        const schema = Object.assign({},where,basic);
-       
+
        context.app.set('temp_get_in_schema',schema);
 
        /* END FULL SCHEMA */
