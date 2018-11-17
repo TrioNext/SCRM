@@ -21,16 +21,29 @@ module.exports = function (app) {
 
      },
 
+
+
      code:{
        type:DataTypes.STRING,
-       defaultValue:0
+       unique: true,
+       validate:{
+         notEmpty:{
+           args:true,
+           msg:"Vui lòng nhập mã"
+         }
+
+
+       }
+     },
+
+     parent_code:{
+       type:DataTypes.STRING,
+       allowNull:true,
+       defaultValue:"0"
      },
      /* mã vùng TP */
 
-     region_id:{
-       type:DataTypes.INTEGER,
-       defaultValue:0
-     },
+
      name:{
         type:DataTypes.STRING,
         allowNull:false,
@@ -39,17 +52,50 @@ module.exports = function (app) {
             args:true,
             msg:"Vui lòng nhập tên"
           },
-          len: [4,40]
+          len: [1,40]
 
         }
      },
 
-     type:{
-       type:DataTypes.TINYINT,
-       defaultValue:1
+     lat:{
+       type:DataTypes.FLOAT,
+       defaultValue:0
      },
-     /* [1- quận - 2 : huyện ] */
+     lng:{
+       type:DataTypes.FLOAT,
+       defaultValue:0
+     },
 
+
+     type:{
+       type:DataTypes.STRING,
+       allowNull:true,
+       defaultValue:null
+     },
+
+     slug:{
+        type:DataTypes.STRING,
+        allowNull:true,
+        defaultValue:null
+     },
+
+     name_with_type:{
+       type:DataTypes.STRING,
+       allowNull:true,
+       defaultValue:null
+     },
+
+     path:{
+       type:DataTypes.STRING,
+       allowNull:true,
+       defaultValue:null
+     },
+
+     path_with_type:{
+       type:DataTypes.STRING,
+       allowNull:true,
+       defaultValue:null
+     },
 
 
      date_created:{
@@ -62,19 +108,6 @@ module.exports = function (app) {
        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
        allowNull: true
      },
-
-
-     lat:{
-       type:DataTypes.FLOAT,
-       defaultValue:0
-     },
-     lng:{
-       type:DataTypes.FLOAT,
-       defaultValue:0
-     },
-
-
-
 
     json:{
       type:DataTypes.TEXT,
