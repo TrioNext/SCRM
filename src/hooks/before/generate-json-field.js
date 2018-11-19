@@ -23,7 +23,7 @@ module.exports = function (options = {}) {
        let obj = `{`;
 
        schema.forEach((item)=>{
-         const value = Helper.khongdau(data[item]);
+         const value = data[item].length>0 ? Helper.khongdau(data[item]) : '';
          obj += ` "${ item }" : "${ value }",`;
        });
 
