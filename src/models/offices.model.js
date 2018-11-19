@@ -26,22 +26,16 @@ module.exports = function (app) {
       type:DataTypes.STRING,
       allowNull:false,
       unique: true,
-      validate:{
-        notEmpty:{
-          args:true,
-          msg:"Vui lòng nhập mã"
-        },
-        len: {
-          args:[4,30],
-          msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
-        },
-
+      
+      notEmpty:{
+        args:true,
+        msg:"Vui lòng nhập mã"
       },
-      set(val){
-
-        const com_id = this.getDataValue()
-        this.setDataValue('code',val.toLowerCase())
+      len: {
+        args:[4,30],
+        msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
       }
+
      },
      
      name:{
@@ -146,23 +140,43 @@ module.exports = function (app) {
           args:true,
           msg:"Vui lòng nhập địa chỉ"
         },
-        len: [4,100]
+        len: {
+          args:[4,100],
+          msg:" Số ký tự giới hạn trong khoảnh [20,120] "
+        }
 
       }
 
     },
-    region_id:{
-      type:DataTypes.INTEGER,
-      defaultValue:0,
+    region_code:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
     },
-    subregion_id:{
-      type:DataTypes.INTEGER,
-      defaultValue:0
+    subregion_code:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
+    },
+    ip_chamcong:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
     },
     phone:{
       type:DataTypes.STRING,
       allowNull:true,
-      defaultValue:null
+      defaultValue:null,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:'Vui lòng nhập số ĐT'
+        },
+        len:{
+          args:[11,40],
+          msg:"Số phone giới hạn ký tự [11,40]"
+        }
+      }
     },
     email:{
       type:DataTypes.STRING,
