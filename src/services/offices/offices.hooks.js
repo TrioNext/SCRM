@@ -29,7 +29,7 @@ module.exports = {
     create: [
 
       postInSchema({Helper,schema:['code', 'name', 'address', 'phone']}), /* this guy return err: on missing Default field */
-      generateJsonField({ Helper ,schema :['code','phone','name','address','email'] }), // This guy create json field stringify
+      generateJsonField({ Helper ,schema :['code','phone','name','address'] }), // This guy create json field stringify
       postInPluginField() // this guy : add field default : [creator_id - company_id] to data for save
     ],
     update: [
