@@ -25,6 +25,13 @@ module.exports = function (options = {}) {
 
     }
 
+    /* change all json object to string value */
+    Object.keys(data_out.data).map((key)=>{
+      if(typeof data_out.data[key] ==='object'){
+        data_out.data[key] = JSON.stringify(data_out.data[key]);
+      }
+    });
+
     context.app.set('method_schema',data_out);
 
     return context;
