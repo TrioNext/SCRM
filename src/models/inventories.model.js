@@ -100,19 +100,22 @@ module.exports = function (app) {
 
 
      date_created:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-       allowNull: true
-     },
-     date_modified:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-       allowNull: true
-     },
-     date_deleted:{
-       type:'TIMESTAMP',
-       allowNull: true
-     },
+      type:DataTypes.DATE,
+      defaultValue: Sequelize.NOW(),
+      allowNull: true
+   },
+
+   date_modified:{
+      type:DataTypes.DATE,
+      defaultValue: Sequelize.NOW(),
+      allowNull: true
+   },
+
+   date_deleted:{
+      type:DataTypes.DATE,
+      allowNull: true
+   },
+
 
      /* seting giới hạn tồn cho mỗi SP báo động */
      limit_minimum_allow:{
