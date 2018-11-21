@@ -18,6 +18,16 @@ module.exports = function (options = {}) {
     format_out.name = format_out.message === '' ? 'success' : 'hook-error';
     format_out.data = data ;
 
+    /* change all json object to string value */
+    Object.keys(data).map((key)=>{
+      if(typeof data[key] ==='object'){
+        data[key] = JSON.stringify(data[key]);
+      }
+    });
+
+    
+
+
     context.app.set('data_out',format_out);
     
     //context.app.set('data_out',format_out);
