@@ -26,17 +26,23 @@ module.exports = function (app) {
       type:DataTypes.STRING,
       allowNull:false,
       unique: true,
-      
-      notEmpty:{
-        args:true,
-        msg:"Vui lòng nhập mã"
-      },
-      len: {
-        args:[4,30],
-        msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
-      }
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:"Vui lòng nhập mã"
+        },
+        len: {
+          args:[4,30],
+          msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
+        },
 
-     },
+      },
+      set(val){
+
+        const com_id = this.getDataValue()
+        this.setDataValue('code',val.toLowerCase())
+      }
+    },
      
      name:{
         type:DataTypes.STRING,
@@ -102,17 +108,17 @@ module.exports = function (app) {
      */
 
      date_created:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+       type:DataTypes.DATE,
+       defaultValue: Sequelize.NOW(),
        allowNull: true
      },
      date_modified:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+       type:DataTypes.DATE,
+       defaultValue: Sequelize.NOW(),
        allowNull: true
      },
      date_deleted:{
-       type:'TIMESTAMP',
+       type:DataTypes.DATE,
        allowNull: true
      },
      working_begin:{
