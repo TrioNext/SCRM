@@ -39,6 +39,9 @@ const operatorsAliases = {
 
 module.exports = function (app) {
   const connectionString = app.get('mysql');
+
+  const CONFIG = global.CONFIG
+
   const sequelize = new Sequelize(connectionString, {
     dialect: 'mysql',
     logging: false,
@@ -53,6 +56,7 @@ module.exports = function (app) {
       timestamps: false,
       freezeTableName: true
     },
+    timezone: 'Asia/Ho_Chi_Minh',
     sync: { force: false },
   });
   const oldSetup = app.setup;
