@@ -93,23 +93,24 @@ module.exports = function (app) {
        type:DataTypes.STRING,
        defaultValue:null
      },
+     
      date_created:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-       allowNull: true
-     },
+      type:DataTypes.DATE,
+      defaultValue: Sequelize.NOW(),
+      allowNull: true
+   },
 
-     date_modified:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-       allowNull: true
-     },
+   date_modified:{
+      type:DataTypes.DATE,
+      defaultValue: Sequelize.NOW(),
+      allowNull: true
+   },
 
-     date_deleted:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-       allowNull: true
-     },
+   date_deleted:{
+      type:DataTypes.DATE,
+      allowNull: true
+   },
+
 
      date_future:{
        type:'TIMESTAMP',
