@@ -46,10 +46,11 @@ module.exports = function (app) {
      
 
      date_created:{
-       type:'TIMESTAMP',
-       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+       type:DataTypes.DATE,
+       defaultValue: Sequelize.NOW,
        allowNull: true
      },
+
      inventory_id:{
        type:DataTypes.INTEGER,
        defaultValue:0
