@@ -59,6 +59,8 @@ class Office extends Service {
       }else{
 
           ret.data = await this.Model.update(data,isUpdate.condition)
+
+          
       }
 
 
