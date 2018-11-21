@@ -142,20 +142,25 @@ module.exports = function (app) {
       type:DataTypes.INTEGER,
       defaultValue:0
     },
+    
     date_created:{
-      type:'TIMESTAMP',
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      type:DataTypes.DATE,
+      defaultValue: Sequelize.NOW(),
       allowNull: true
-    },
-    date_modified:{
-      type:'TIMESTAMP',
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+   },
+
+   date_modified:{
+      type:DataTypes.DATE,
+      defaultValue: Sequelize.NOW(),
       allowNull: true
-    },
-    date_deleted:{
-      type:'TIMESTAMP',
+   },
+
+   date_deleted:{
+      type:DataTypes.DATE,
       allowNull: true
-    },
+   },
+
+   
     schedule:{
       type:DataTypes.TEXT,
       allowNull:true,
