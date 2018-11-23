@@ -21,21 +21,47 @@ module.exports = function (app) {
 
      },
 
+     code:{
+      type:DataTypes.STRING,
+      allowNull:false,
+      unique: true,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:"Vui lòng nhập mã"
+        },
+        len: {
+          args:[4,30],
+          msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
+        },
 
-     name:{
+      },
+      set(val){
+
+        
+        this.setDataValue('code',val.toLowerCase())
+      }
+    },
+
+
+      name:{
         type:DataTypes.STRING,
         allowNull:false,
         validate:{
+          
           notEmpty:{
             args:true,
             msg:"Vui lòng nhập tên"
           },
-          len: [4,40]
+          len: {
+            args:[4,120],
+            msg:'Tên bộ phận giới hạn trong khoảng [4,120] ký tự'
+          },
 
         }
-     },
+    },
 
-     store_type:{
+     type:{
        type:DataTypes.TINYINT,
        defaultValue:1
      },
@@ -59,6 +85,8 @@ module.exports = function (app) {
        defaultValue:0
      },
      /* NHÓM TRUONG - CUA HÀNG TRUOG*/
+
+
      staff_on:{
        type:DataTypes.TEXT,
        allowNull:true,
@@ -94,31 +122,54 @@ module.exports = function (app) {
    },
 
    
-     address:{
-       type:DataTypes.STRING,
-       allowNull:false,
-       validate:{
-         notEmpty:{
-           args:true,
-           msg:"Vui lòng nhập địa chỉ"
-         },
-         len: [4,100]
+   address:{
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:"Vui lòng nhập địa chỉ"
+        },
+        len: {
+          args:[4,100],
+          msg:" Số ký tự giới hạn trong khoảnh [20,120] "
+        }
 
-       }
+      }
 
-     },
-     region_id:{
-       type:DataTypes.INTEGER,
-       defaultValue:0,
-     },
-     subregion_id:{
-       type:DataTypes.INTEGER,
-       defaultValue:0
-     },
+    },
+    region_code:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
+    },
+    subregion_code:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
+    },
+
+    ip_chamcong:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
+    },
+
+
      phone:{
-       type:DataTypes.STRING,
-       allowNull:true,
-       defaultValue:null
+      type:DataTypes.STRING,
+      allowNull:true,
+      defaultValue:null,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:'Vui lòng nhập số ĐT'
+        },
+        len:{
+          args:[10,40],
+          msg:"Số phone giới hạn ký tự [10,40]"
+        }
+      }
      },
      email:{
        type:DataTypes.STRING,
@@ -162,7 +213,26 @@ module.exports = function (app) {
       }
     }
 
-  }
+  },
+    {
+      indexes: [
+          {
+              unique: true,
+              fields: ['code']
+          }
+      ]
+    },
+    {
+      hooks: {
+            beforeValidate: function (data, options) {
+                if (typeof data.code === 'string') {
+                    data.code = data.code.toLowerCase().trim();
+                }
+
+
+            }
+        }
+    }
 
   )
 
