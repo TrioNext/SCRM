@@ -39,7 +39,7 @@ module.exports = function (app) {
       },
       set(val){
 
-        const com_id = this.getDataValue()
+        
         this.setDataValue('code',val.toLowerCase())
       }
     },
@@ -115,7 +115,7 @@ module.exports = function (app) {
      date_modified:{
        type:DataTypes.DATE,
        defaultValue: Sequelize.NOW(),
-       allowNull: true
+       allowNull: true 
      },
      date_deleted:{
        type:DataTypes.DATE,
@@ -179,8 +179,8 @@ module.exports = function (app) {
           msg:'Vui lòng nhập số ĐT'
         },
         len:{
-          args:[11,40],
-          msg:"Số phone giới hạn ký tự [11,40]"
+          args:[10,40],
+          msg:"Số phone giới hạn ký tự [10,40]"
         }
       }
     },
