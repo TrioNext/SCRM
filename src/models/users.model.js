@@ -27,6 +27,28 @@ module.exports = function (app) {
           this.setDataValue('username',val.toLowerCase())
         }
      },
+
+     position:{
+        type:DataTypes.STRING,
+        allowNull:false,
+        validate:{
+          notEmpty:{
+            args:true,
+            msg:"Vui lòng nhập chức vụ"
+          },
+          len: {
+            args:[4,40],
+            msg:" Tên tối thiểu [4,40] ký tự"
+          }
+
+        }
+     },
+     /* 1: nam - 0 nữ */
+     gender:{
+       type:DataTypes.TINYINT,
+       defaultValue:1 
+     },
+
      name:{
         type:DataTypes.STRING,
         allowNull:false,
@@ -126,6 +148,10 @@ module.exports = function (app) {
       type:DataTypes.INTEGER,
       defaultValue:0
     },
+    department_id:{
+      type:DataTypes.INTEGER,
+      defaultValue:0
+    },
     store_id:{
       type:DataTypes.INTEGER,
       defaultValue:0
@@ -222,6 +248,10 @@ module.exports = function (app) {
 
     },
     is_pass_training:{
+      type:DataTypes.TINYINT,
+      defaultValue:0
+    },
+    is_limit_ip_chamcong:{
       type:DataTypes.TINYINT,
       defaultValue:0
     },
