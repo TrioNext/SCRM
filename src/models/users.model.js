@@ -1,5 +1,7 @@
 // See http://docs.sequelizejs.com/en/latest/docs/models-definition/
 // for more of what you can do here.
+'use strict';
+
 const Sequelize = require('sequelize');
 const DataTypes = Sequelize.DataTypes;
 
@@ -16,7 +18,7 @@ module.exports = function (app) {
         type:DataTypes.INTEGER,
         primaryKey:true,
         autoIncrement:true,
-        allowNull: false,
+
         unique: true
 
      },
@@ -46,7 +48,7 @@ module.exports = function (app) {
      /* 1: nam - 0 nữ */
      gender:{
        type:DataTypes.TINYINT,
-       defaultValue:1 
+       defaultValue:1
      },
 
      name:{
@@ -168,7 +170,7 @@ module.exports = function (app) {
       type:DataTypes.INTEGER,
       defaultValue:0
     },
-    
+
     date_created:{
       type:DataTypes.DATE,
       defaultValue: Sequelize.NOW(),
@@ -186,7 +188,7 @@ module.exports = function (app) {
       allowNull: true
    },
 
-   
+
     schedule:{
       type:DataTypes.TEXT,
       allowNull:true,
@@ -205,13 +207,15 @@ module.exports = function (app) {
       }
 
     },
-    region_id:{
-      type:DataTypes.INTEGER,
-      defaultValue:0,
+    region_code:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
     },
-    subregion_id:{
-      type:DataTypes.INTEGER,
-      defaultValue:0
+    subregion_code:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true
     },
     phone:{
       type:DataTypes.STRING,
@@ -267,8 +271,16 @@ module.exports = function (app) {
         return JSON.parse(json);
       }
     }
+  });
 
-  })
+  users.associate = function(models){
+      users.belongsTo(models.offices, {
+          as:'offices',
+          foreignKey: 'office_id'
+
+      });
+  };
+
 
 
 
