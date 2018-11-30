@@ -23,9 +23,18 @@ class User extends Service {
 
       /* GOT HOOKED BEFOR : => Default schema from app main Object*/
       const query = params.query;
-      const schema = this.app.get('temp_get_in_schema');
+      let schema = this.app.get('temp_get_in_schema');
 
-      this.emit('test',{status:'ok good'})
+      //this.emit('test',{status:'ok good'})
+
+      const sequelize = this.app.get('sequelizeClient');
+      const { offices } = sequelize.models;
+
+      Object.assign(schema,{
+        include:[
+          { model: offices, as:'offices'}
+        ]
+      });
 
       return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
