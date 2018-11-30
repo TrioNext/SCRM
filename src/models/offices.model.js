@@ -20,6 +20,7 @@ module.exports = function (app) {
         allowNull: false,
         unique: true
 
+
      },
 
      code:{
@@ -39,16 +40,16 @@ module.exports = function (app) {
       },
       set(val){
 
-        
+
         this.setDataValue('code',val.toLowerCase())
       }
     },
-     
+
      name:{
         type:DataTypes.STRING,
         allowNull:false,
         validate:{
-          
+
           notEmpty:{
             args:true,
             msg:"Vui lòng nhập tên"
@@ -115,7 +116,7 @@ module.exports = function (app) {
      date_modified:{
        type:DataTypes.DATE,
        defaultValue: Sequelize.NOW(),
-       allowNull: true 
+       allowNull: true
      },
      date_deleted:{
        type:DataTypes.DATE,
@@ -229,10 +230,16 @@ module.exports = function (app) {
               }
           }
       }
-  )
+  );
+
+  offices.associate = function(models){
+      offices.hasMany(models.users, {
+          as:'users',
+          foreignKey: 'office_id'
+
+      });
+  };
 
   return offices;
-
-
 
 };
