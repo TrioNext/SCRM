@@ -23,11 +23,25 @@ module.exports = function (app) {
 
      },
      username:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        set(val){
-          this.setDataValue('username',val.toLowerCase())
-        }
+       type:DataTypes.STRING,
+       allowNull:false,
+       unique: true,
+       validate:{
+         notEmpty:{
+           args:true,
+           msg:"Vui lòng nhập mã"
+         },
+         len: {
+           args:[4,30],
+           msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
+         },
+
+       },
+       set(val){
+
+         const com_id = this.getDataValue()
+         this.setDataValue('username',val.toLowerCase())
+       }
      },
 
      position:{
@@ -83,32 +97,12 @@ module.exports = function (app) {
      job_level:{
         type:DataTypes.TINYINT,
         defaultValue:2
-        /*
-        - Mới tốt nghiệp
-        - Thực tập
-        - Nhân viên
-        - Trưởng nhóm /  Giám sát
-        - Quản lý cửa hàng
-        - Trợ lý quản lý cửa hàng
-        - Trưởng phòng
-        - Phó phòng
-        - Giám đốc
-        - Phó giám đốc
-        - Giám đốc điều hành
-        - Chủ tịch
-        */
+
      },
      job_type:{
         type:DataTypes.TINYINT,
         defaultValue:2,
-        /*
-        - NV Chính thức
-        - Bán thời gian
-        - Thử việc
-        - Làm thêm ngoài giờ
-        - Nhân viên thời vụ
-        - Làm dự án
-        */
+
     },
     is_affiliated:{
       type:DataTypes.TINYINT,
@@ -177,7 +171,7 @@ module.exports = function (app) {
       allowNull: true
    },
 
-   date_modified:{
+    date_modified:{
       type:DataTypes.DATE,
       defaultValue: Sequelize.NOW(),
       allowNull: true
@@ -196,15 +190,8 @@ module.exports = function (app) {
     },
     address:{
       type:DataTypes.STRING,
-      allowNull:false,
-      validate:{
-        notEmpty:{
-          args:true,
-          msg:"Vui lòng nhập địa chỉ"
-        },
-        len: [4,100]
+      allowNull:true,
 
-      }
 
     },
     region_code:{
@@ -219,12 +206,17 @@ module.exports = function (app) {
     },
     phone:{
       type:DataTypes.STRING,
-      allowNull:true,
-      defaultValue:null
+      allowNull:false,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:"Vui lòng nhập số ĐT"
+        }
+      }
     },
     email:{
       type:DataTypes.STRING,
-      allowNull:false,
+      allowNull:true,
       unique: true,
       validate:{
         isEmail: {
@@ -271,7 +263,16 @@ module.exports = function (app) {
         return JSON.parse(json);
       }
     }
-  });
+  },
+    {
+      indexes: [
+          {
+              unique: true,
+              fields: ['username','email']
+          }
+      ]
+    }
+);
 
   users.associate = function(models){
       users.belongsTo(models.offices, {
