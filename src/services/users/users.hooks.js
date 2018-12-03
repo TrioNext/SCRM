@@ -34,8 +34,8 @@ module.exports = {
     get: [],
     create: [
       hashPassword(),
-      postInSchema({Helper,schema:['username', 'name', 'password', 'address', 'email']}), /* this guy return err: on missing Default field */
-      generateJsonField({ Helper ,schema :['username','name','address'] }), // This guy create json field stringify
+      postInSchema({Helper,schema:[ 'password','position','username','phone','email','name']}), /* this guy return err: on missing Default field */
+      generateJsonField({ Helper ,schema :['email','phone','position','name',] }), // This guy create json field stringify
       postInPluginField() // this guy : add field default : [creator_id - company_id] to data for save
 
 
