@@ -26,16 +26,7 @@ class Office extends Service {
       /* GOT HOOKED BEFOR : => Default schema from app main Object*/
       const query = params.query;
       let schema = this.app.get('temp_get_in_schema');
-
-      const sequelize = this.app.get('sequelizeClient');
-      const { users } = sequelize.models;
-
-      Object.assign(schema,{
-        include:[
-          { model: users, as:'users'}
-        ]
-      });
-
+      
 
       return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
