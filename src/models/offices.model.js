@@ -232,13 +232,17 @@ module.exports = function (app) {
       }
   );
 
-  offices.associate = function(models){
+  /*offices.associate = function(models){
       offices.hasMany(models.users, {
           as:'users',
-          foreignKey: 'office_id'
+          foreignKey: {
+            name: 'office_id',
+            allowNull: false
+          }
+
 
       });
-  };
+  };*/
 
   return offices;
 
