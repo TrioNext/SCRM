@@ -18,6 +18,14 @@ module.exports = function (options = {}) {
     format_out.name = format_out.message === '' ? 'success' : 'hook-error';
     format_out.data = data ;
 
+    format_out.type = context.method;
+    format_out.model = context.service.Model.name;
+    format_out.token = context.params.headers.authorization ;
+
+
+
+
+
     /* change all json object to string value */
     Object.keys(data).map((key)=>{
       if(typeof data[key] ==='object'){
@@ -25,11 +33,9 @@ module.exports = function (options = {}) {
       }
     });
 
-    
-
 
     context.app.set('data_out',format_out);
-    
+
     //context.app.set('data_out',format_out);
 
     return context;
