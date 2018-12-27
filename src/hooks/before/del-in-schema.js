@@ -23,8 +23,12 @@ module.exports = function (options = {}) {
       date_deleted: new Date()
     }
     idata.id = id ;
+    idata.type = context.method;
+    idata.model = context.service.Model.name;
+    idata.token = context.params.headers.authorization ;
+    
 
     context.app.set('data_del',idata);
-    
+
   };
 };
