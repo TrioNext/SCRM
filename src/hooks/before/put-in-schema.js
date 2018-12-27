@@ -20,6 +20,11 @@ module.exports = function (options = {}) {
     data_out.message = Object.keys(query).length > 0 ? '' : 'Vui lòng xem lại params query fields';
     data_out.name = data_out.message === '' ? 'success' : 'hook-error';
     data_out.data = context.data ;
+    data_out.type = context.method;
+    data_out.model = context.service.Model.name;
+    data_out.token = context.params.headers.authorization ;
+    
+
 
     if(data_out.name==='success'){
 
@@ -30,6 +35,7 @@ module.exports = function (options = {}) {
         });
 
     }
+
 
     context.app.set('conditon_schema',data_out);
 
