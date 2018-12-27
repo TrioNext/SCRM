@@ -56,13 +56,20 @@ class iRoute extends Service {
 
       const isUpdate = this.app.get('conditon_schema');
       ret = isUpdate;
+
       const isMethod = this.app.get('method_schema');
 
       if(isMethod.name==='success'){
          ret =  this[isMethod.method](data,params);
       }else{
 
-          ret.data = await this.Model.update(data,isUpdate.condition)
+          const isSuccess = await this.Model.update(data,isUpdate.condition);
+          ret.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-update' ;
+          ret.data.id = ret.condition.where.id;
+
+          delete ret.condition;
+
+
       }
 
 
@@ -70,23 +77,24 @@ class iRoute extends Service {
        return ret ;
 
     }
-
     /* cURL : DELETE */
     async remove(id, params ){
 
         /* be hooked before => data for update*/
-        const idata = this.app.get('data_del');
+        let idata = this.app.get('data_del');
 
-        idata.data =  await this.Model.update(idata.data,{
+        const isSuccess = await this.Model.update(idata.data,{
           where:{
             id:idata.id
           }
         });
 
+        idata.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-remove';
+        idata.data.id = idata.id ;
+
+
         return idata;
     }
-
-    /* END CRUD METHOD */
 
 
   }
