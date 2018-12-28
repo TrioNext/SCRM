@@ -11,24 +11,32 @@
 module.exports = function (options = {}) {
   return async context => {
 
-    const { user } = context.params;
-    const {id} =  context;
-    let idata = {};
+    const userInfo = context.params.user;
 
-    idata.message = id === null ||  isNaN(id) ? 'Vui lòng xem lại ID' : '';
-    idata.name = id === null || isNaN(id)  ? 'hook-error' : 'success';
-    idata.data = {
+    const {id} =  context;
+    let data_out = {};
+
+    data_out.message = id === null ||  isNaN(id) ? 'Vui lòng xem lại ID' : '';
+    data_out.name = id === null || isNaN(id)  ? 'hook-error' : 'success';
+    data_out.data = {
       is_deleted:1,
-      deleted_by:user.id,
+      deleted_by:userInfo.id,
       date_deleted: new Date()
     }
-    idata.id = id ;
-    idata.type = context.method;
-    idata.model = context.service.Model.name;
-    idata.token = context.params.headers.authorization ;
-    
+    data_out.id = id ;
+    data_out.type = context.method;
+    data_out.model = context.service.Model.name;
+    data_out.token = context.params.headers.authorization ;
 
-    context.app.set('data_del',idata);
+    data_out.userInfo = {
+      id:userInfo.id,
+      name:userInfo.name,
+      gender:userInfo.gender,
+      is_leader:userInfo.is_leader
+    }
+
+
+    context.app.set('data_del',data_out);
 
   };
 };
