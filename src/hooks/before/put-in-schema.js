@@ -11,6 +11,8 @@ THIS GUY  :
 module.exports = function (options = {}) {
   return async context => {
 
+    const userInfo = context.params.user;
+    
     let { query } = context.params;
     let data_out ={}
 
@@ -23,7 +25,15 @@ module.exports = function (options = {}) {
     data_out.type = context.method;
     data_out.model = context.service.Model.name;
     data_out.token = context.params.headers.authorization ;
-    
+
+    data_out.userInfo = {
+      id:userInfo.id,
+      name:userInfo.name,
+      gender:userInfo.gender,
+      is_leader:userInfo.is_leader
+    }
+
+
 
 
     if(data_out.name==='success'){
