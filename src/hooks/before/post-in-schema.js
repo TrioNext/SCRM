@@ -9,19 +9,28 @@ module.exports = function (options = {}) {
   return async context => {
 
     const Helper = options.Helper;
+
+    const userInfo = context.params.user;
+
     let {data} =  context;
-    let format_out ={}
+    let data_out ={}
     const schema =  options.schema ||   ['field'];
 
     const filers =  Helper.isPassedSchema(schema,Object.keys(data))
-    format_out.message = filers === '' ? '' : ' Vui lòng kiểm tra  '+filers;
-    format_out.name = format_out.message === '' ? 'success' : 'hook-error';
-    format_out.data = data ;
+    data_out.message = filers === '' ? '' : ' Vui lòng kiểm tra  '+filers;
+    data_out.name = data_out.message === '' ? 'success' : 'hook-error';
+    data_out.data = data ;
 
-    format_out.type = context.method;
-    format_out.model = context.service.Model.name;
-    format_out.token = context.params.headers.authorization ;
+    data_out.type = context.method;
+    data_out.model = context.service.Model.name;
+    data_out.token = context.params.headers.authorization ;
 
+    data_out.userInfo = {
+      id:userInfo.id,
+      name:userInfo.name,
+      gender:userInfo.gender,
+      is_leader:userInfo.is_leader
+    }
 
 
 
@@ -34,9 +43,9 @@ module.exports = function (options = {}) {
     });
 
 
-    context.app.set('data_out',format_out);
+    context.app.set('data_out',data_out);
 
-    //context.app.set('data_out',format_out);
+    //context.app.set('data_out',data_out);
 
     return context;
   };
