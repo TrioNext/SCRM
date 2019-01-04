@@ -37,9 +37,19 @@ class User extends Service {
       });
 
 
+      let data_out ;
+      if(query.$limit !== undefined){
+        data_out = await super.find(params);
+      }else{
+        data_out = await this.Model.findAndCountAll(schema);
+        Object.assign(data_out,{
+          name:'success'
+        });
+      }
 
 
-      return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
+      return  data_out ; //query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
+      //return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
     }
     /* cURL : END GET  */
