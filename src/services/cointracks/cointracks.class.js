@@ -31,7 +31,12 @@ class iRoute extends Service {
       const schema = this.app.get('temp_get_in_schema');
 
 
-      return query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
+      let data_out = await this.Model.findAndCountAll(schema);
+      Object.assign(data_out,{
+        name:'success'
+      });
+
+      return  data_out ; //query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
     }
 
