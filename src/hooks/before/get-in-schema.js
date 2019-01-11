@@ -25,7 +25,7 @@ module.exports = function (options = {}) {
       query.sort_by =  query.sort_by || 'id';
       query.sort_type = query.sort_type || 'desc';
 
-      
+
 
       query.basicQuery = {
           order:[
