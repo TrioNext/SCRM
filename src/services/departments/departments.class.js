@@ -11,8 +11,6 @@ cURL
 
     DEL
 
-
-
 */
 
 const { Service } = require( 'feathers-sequelize');
