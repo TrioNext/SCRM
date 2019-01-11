@@ -92,6 +92,8 @@ class User extends Service {
          ret =  this[isMethod.method](data,params);
       }else{
 
+          delete data.password ;// dont update password
+
           const isSuccess = await this.Model.update(data,isUpdate.condition);
           ret.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-update' ;
           ret.data.id = ret.condition.where.id;
