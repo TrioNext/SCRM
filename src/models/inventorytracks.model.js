@@ -29,6 +29,30 @@ module.exports = function (app) {
        defaultValue:'in'
      },
 
+     /* LOAI MUA HÀNG - LOAI NHẬP HÀNG */
+     action_type:{
+       type:DataTypes.TINYINT,
+       defaultValue:0
+     },
+
+     /* TRẠNG THÁI : mới - đang xử lý - hoàn thành*/
+     status:{
+       type:DataTypes.TINYINT,
+       defaultValue:0
+     },
+
+     /* Mã đơn hàng */
+     group_code:{
+       type:DataTypes.STRING,
+       allowNull:true
+     },
+
+     /* GHI CHÚ*/
+     note:{
+       type:DataTypes.STRING,
+       allowNull:true
+     },
+
      is_deleted:{
        type:DataTypes.TINYINT,
        defaultValue:0
@@ -43,7 +67,7 @@ module.exports = function (app) {
        defaultValue:0
      },
 
-     
+
 
      date_created:{
        type:DataTypes.DATE,
