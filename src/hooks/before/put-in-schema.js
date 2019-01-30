@@ -12,7 +12,7 @@ module.exports = function (options = {}) {
   return async context => {
 
     const userInfo = context.params.user;
-    
+
     let { query } = context.params;
     let data_out ={}
 
