@@ -44,6 +44,13 @@ class iRoute extends Service {
     /* cURL POST */
     async create(data,params){
 
+        /* cleart all fields null  */
+        Object.keys(data).map((item)=>{
+          if(data[item]==='null'){
+            delete data[item];
+          }
+        });
+
 
         /* GOT HOOKED BEFOR :-> APP DATA_OUT*/
         let data_out = this.app.get('data_out');
@@ -68,6 +75,13 @@ class iRoute extends Service {
          ret =  this[isMethod.method](data,params);
       }else{
 
+          /* cleart all fields null  */
+          Object.keys(data).map((item)=>{
+            if(data[item]==='null'){
+              delete data[item];
+            }
+          });
+          
           const isSuccess = await this.Model.update(data,isUpdate.condition);
           ret.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-update' ;
           ret.data.id = ret.condition.where.id;
