@@ -191,7 +191,7 @@ module.exports = function (app) {
     address:{
       type:DataTypes.STRING,
       allowNull:true,
-
+      defaultValue:"HCM",
 
     },
     region_code:{
