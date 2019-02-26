@@ -21,20 +21,17 @@ class iRoute extends Service {
     setup(app){
       this.app = app;
     }
-
+    
     /* METHOD CRUD */
     async find(params){
 
       /* GOT HOOKED BEFOR : => Default schema from app main Object*/
-      const query = params.query;
-      const schema = this.app.get('temp_get_in_schema');
-
-      let data_out = await this.Model.findAndCountAll(schema);
-      Object.assign(data_out,{
+      const schema = params.schema ;
+      let data = await this.Model.findAndCountAll(schema);
+      Object.assign(data,{
         name:'success'
       });
-
-      return  data_out ; //query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
+      return  data ; //query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
 
     }
 
@@ -79,7 +76,7 @@ class iRoute extends Service {
               delete data[item];
             }
           });
-          
+
           const isSuccess = await this.Model.update(data,isUpdate.condition);
           ret.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-update' ;
           ret.data.id = ret.condition.where.id;

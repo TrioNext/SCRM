@@ -1,8 +1,7 @@
 /*
 THIS  IS METHOD :
   - DETECT : ID IS A METHOD OR NOT
-  - RUN ON HTTP : GET - PUT
-
+  - RUN ON HTTP : PUT
 
 
 */
@@ -30,14 +29,14 @@ module.exports = function (options = {}) {
     }
 
     /* change all json object to string value */
-    Object.keys(data_out.data).map((key)=>{
-      if(typeof data_out.data[key] ==='object'){
-        data_out.data[key] = JSON.stringify(data_out.data[key]);
+    Object.keys(data.data).map((key)=>{
+      if(typeof data.data[key] ==='object'){
+        data.data[key] = JSON.stringify(data.data[key]);
       }
     });
 
-    context.app.set('method_schema',data_out);
-
+    params.data = data ;
+    
     return context;
   };
 };

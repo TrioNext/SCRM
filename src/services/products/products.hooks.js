@@ -4,7 +4,8 @@ const { authenticate } = require('@feathersjs/authentication').hooks;
 const Helper = require('../../models/helper');
 
 /* BEFORE : HTTP GET */
-      const getInSchema = require('../../hooks/before/get-in-schema'); // -> GET Default SCHEMA QUERY DATABASE
+
+      const defautSchemaGet = require('../../hooks/before/default-schema-get'); // -> GET Default SCHEMA QUERY DATABASE
 
 /*          HTTP POST */
       const postInSchema = require('../../hooks/before/post-in-schema');
@@ -24,7 +25,7 @@ const Helper = require('../../models/helper');
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
-    find: [getInSchema({Helper})],
+    find: [defautSchemaGet({Helper})], // -> GET Default SCHEMA QUERY DATABASE
     get: [],
     create: [
 
