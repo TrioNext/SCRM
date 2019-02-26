@@ -23,7 +23,7 @@ const Helper = require('../../models/helper');
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
+    all: [ /*authenticate('jwt')*/ ],
     find: [getInSchema({Helper})],
     get: [],
     create: [

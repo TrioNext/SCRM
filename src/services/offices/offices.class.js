@@ -78,7 +78,7 @@ class Office extends Service {
               delete data[item];
             }
           });
-          
+
           const isSuccess = await this.Model.update(data,isUpdate.condition);
           ret.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-update' ;
           ret.data.id = ret.condition.where.id;

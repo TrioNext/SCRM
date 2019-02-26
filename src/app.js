@@ -35,8 +35,26 @@ app.use(compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
+
+
+
 // Host the public folder
 app.use('/', express.static(app.get('public')));
+
+// ROUTE CUSTOM
+/*app.use('/offices/:id', (req, res) => {
+
+  res.send('test')
+  res.json({
+    message: 'Hello world from Express middleware'
+  });
+
+});*/
+
+
+// END ROUTE CUSTOM
+
+
 
 
 // Set up Plugins and providers
@@ -50,6 +68,7 @@ app.configure(middleware);
 app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
+
 // Set up event channels (see channels.js)
 app.configure(channels);
 
