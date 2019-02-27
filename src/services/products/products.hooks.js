@@ -5,43 +5,52 @@ const Helper = require('../../models/helper');
 
 /* BEFORE : HTTP GET */
 
+      const pluginUserInfo = require('../../hooks/before/plugin-userinfo');
+
+
       const defautSchemaGet = require('../../hooks/before/default-schema-get'); // -> GET Default SCHEMA QUERY DATABASE
 
-/*          HTTP POST */
-      const postInSchema = require('../../hooks/before/post-in-schema');
-      const generateJsonField = require('../../hooks/before/generate-json-field');
-      const postInPluginField = require('../../hooks/before/post-in-plugin-field');
+      /* POST */
+      const defaultSchemaPost = require('../../hooks/before/default-schema-post');
+      const buildJsonFieldPost = require('../../hooks/before/build-json-field-post');
+      const defaultKeyFieldPost = require('../../hooks/before/default-key-field-post');
+
+      /* ERROR*/
+      const consoleError = require('../../hooks/error/console-error');
 
 /*          HTTP: PUT */
-      const putInSchema = require('../../hooks/before/put-in-schema');
-      const putInAction = require('../../hooks/before/put-in-action');
-      const putInPluginField = require('../../hooks/before/put-in-plugin-field');
+      const isMethod = require('../../hooks/before/isMethod');
+      const defaultSchemaPut = require('../../hooks/before/default-schema-put');
+      const defaultKeyFieldPut = require('../../hooks/before/default-key-field-put')
 
 
 /*          HTTP: DELETE */
-      const delInSchema = require('../../hooks/before/del-in-schema');
+      const defaultSchemaDel = require('../../hooks/before/default-schema-del');
+
 
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
-    find: [defautSchemaGet({Helper})], // -> GET Default SCHEMA QUERY DATABASE
+    all: [ authenticate('jwt'),pluginUserInfo() ],
+    find: [defautSchemaGet({Helper})],
     get: [],
     create: [
 
-      postInSchema({Helper,schema:['code', 'name','type','supplier_id']}), /* this guy return err: on missing Default field */
-      generateJsonField({ Helper ,schema :['code', 'name'] }), // This guy create json field stringify
-      postInPluginField() // this guy : add field default : [creator_id - company_id] to data for save
+      defaultSchemaPost({Helper,schema:['code', 'name','type','supplier_id']}), /* this guy return err: on missing Default field */
+      buildJsonFieldPost({ Helper ,schema :['code', 'name'] }), // This guy create json field stringify
+      defaultKeyFieldPost() // this guy : add field default : [creator_id - company_id] to data for save
     ],
     update: [
 
-      putInSchema(), /* this guy format params query as object condition for update  */
-      putInAction(), /* this guy return to call a method  */
-      putInPluginField(['date_modified']) /*  this gus add field : date_modified -   */
+      isMethod({Helper}), /* this guy return to call a method  */
+      defaultSchemaPut(), /* this guy format params query as object condition for update  */
+      defaultKeyFieldPut() /* date_modified, log =[change ] */
+
+
     ],
     patch: [],
     remove: [
-      delInSchema() /*  this gus add field : date_deleleted - deleted_by -   */
+      defaultSchemaDel() /*  this gus add field : date_deleleted - deleted_by -   */
     ]
   },
 
@@ -56,7 +65,7 @@ module.exports = {
   },
 
   error: {
-    all: [],
+    all: [consoleError()],
     find: [],
     get: [],
     create: [],

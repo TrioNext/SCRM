@@ -210,15 +210,15 @@ module.exports = function (app) {
     }
 
   },
-      {
+    {
         indexes: [
             {
                 unique: true,
                 fields: ['code']
             }
         ]
-      },
-      {
+    },
+    {
         hooks: {
               beforeValidate: function (data, options) {
                   if (typeof data.code === 'string') {
@@ -228,7 +228,7 @@ module.exports = function (app) {
 
               }
           }
-      }
+    }
   );
 
   /*offices.associate = function(models){

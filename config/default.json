@@ -6,9 +6,10 @@
     "default": 10,
     "max": 20
   },
-  "mysql": "mysql://benjamin:admin@333@35.240.236.106:3306/scrm",
+  "mysql": "mysql://root@localhost:3306/scrm",
 
   "db": {
+    "ip":"35.240.236.106:3306",
     "dialect": "mysql",
     "dbname": "scrm",
     "username": "benjamin",

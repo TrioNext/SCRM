@@ -2,6 +2,28 @@
 
 class Helper {
 
+
+  clearFieldNull(list){
+
+    Object.keys(list).map((item)=>{
+        if(list[item]==='null'){
+          delete list[item];
+        }
+    });
+
+    return list ;
+    
+  }
+  covertJsonFieldToString(list){
+
+    Object.keys(list).map((key)=>{
+      if(typeof list[key] ==='object'){
+        list[key] = JSON.stringify(list[key]);
+      }
+    });
+
+    return list ;
+  }
   khongdau(str){
 
         str= str.toLowerCase();

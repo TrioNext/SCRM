@@ -23,16 +23,25 @@ module.exports = function (app) {
      },
 
      code:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        unique: {
-            args: true,
-            msg: 'Vui lòng nhập mã khác'
+      type:DataTypes.STRING,
+      allowNull:false,
+      unique: true,
+      validate:{
+        notEmpty:{
+          args:true,
+          msg:"Vui lòng nhập mã"
         },
-        set(val){
-          this.setDataValue('code',val.toLowerCase())
-        }
-     },
+        len: {
+          args:[4,30],
+          msg:'Mã bộ phận giới hạn trong khoảng [4,30] ký tự'
+        },
+
+      },
+      set(val){
+
+        this.setDataValue('code',val.toLowerCase())
+      }
+    },
      name:{
         type:DataTypes.STRING,
         allowNull:false,
@@ -151,7 +160,26 @@ module.exports = function (app) {
         return JSON.parse(json);
       }
     }
-  }
+  },
+    {
+        indexes: [
+            {
+                unique: true,
+                fields: ['code']
+            }
+        ]
+    },
+    {
+        hooks: {
+              beforeValidate: function (data, options) {
+                  if (typeof data.code === 'string') {
+                      data.code = data.code.toLowerCase().trim();
+                  }
+
+
+              }
+          }
+    }
   )
 
   return products;

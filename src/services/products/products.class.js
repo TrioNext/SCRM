@@ -21,17 +21,20 @@ class iRoute extends Service {
     setup(app){
       this.app = app;
     }
-    
+
+
     /* METHOD CRUD */
     async find(params){
 
       /* GOT HOOKED BEFOR : => Default schema from app main Object*/
       const schema = params.schema ;
       let data = await this.Model.findAndCountAll(schema);
+
       Object.assign(data,{
-        name:'success'
+        userInfo:params.userInfo
       });
-      return  data ; //query.$limit !== undefined ? await super.find(params) : await this.Model.findAndCountAll(schema);
+
+      return  data ;
 
     }
 
@@ -39,52 +42,41 @@ class iRoute extends Service {
     /* cURL POST */
     async create(data,params){
 
-
         /* cleart all fields null  */
-        Object.keys(data).map((item)=>{
-          if(data[item]==='null'){
-            delete data[item];
-          }
-        });
-
-        /* GOT HOOKED BEFOR :-> APP DATA_OUT*/
-        let data_out = this.app.get('data_out');
+        const data_out = params.data ; // BE HOOKED BEFORE
         data_out.data = data_out.name==='success' ?  await this.Model.create(data) : data_out.data ;
+
+        Object.assign(data_out,{
+          userInfo:params.userInfo
+        });
 
         return data_out;
 
     }
 
-
     async update(id,data,params){
 
       /* be hooked before : to get condition schema for update database from params query*/
-      let ret;
+      let ret = {};
 
-      const isUpdate = this.app.get('conditon_schema');
-      ret = isUpdate;
+      const { condition } = params.data ;
+      if(params.isMethod){
 
-      const isMethod = this.app.get('method_schema');
+         ret =  this[params.data.method](data,params);
 
-      if(isMethod.name==='success'){
-         ret =  this[isMethod.method](data,params);
       }else{
 
-          /* cleart all fields null  */
-          Object.keys(data).map((item)=>{
-            if(data[item]==='null'){
-              delete data[item];
-            }
-          });
+        const isSuccess = await this.Model.update(data,condition);
 
-          const isSuccess = await this.Model.update(data,isUpdate.condition);
-          ret.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-update' ;
-          ret.data.id = ret.condition.where.id;
+        ret.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-update' ;
+        ret.data = params.data ;
 
-          delete ret.condition;
-
+        Object.assign(ret,{
+          userInfo:params.userInfo
+        });
 
       }
+
 
 
 
@@ -95,20 +87,29 @@ class iRoute extends Service {
     async remove(id, params ){
 
         /* be hooked before => data for update*/
-        let idata = this.app.get('data_del');
+        let idata = params.data ;
 
         const isSuccess = await this.Model.update(idata.data,{
           where:{
-            id:idata.id
+            id:id
           }
         });
 
         idata.name = parseInt(isSuccess[0]) > 0 ? 'success' : 'fail-remove';
-        idata.data.id = idata.id ;
 
+        Object.assign(idata,{
+          userInfo:params.userInfo
+        });
 
         return idata;
     }
+
+    /* CUSTOM METHOD ON UPDATE HTTP*/
+    async test(data,params){
+
+      return data;
+    }
+
 
 
   }
