@@ -18,16 +18,25 @@ const mModel = require('../../models/products.model');
 
 class iRoute extends Service {
 
-    setup(app){
-      this.app = app;
+
+
+    /* GET DATA INFO || CALL METHOD WITH GET HTTP REST*/
+    async get(id,params){
+
+        //const data = await this.Model.getInfo(id);
+        let ret ;
+        ret = params.isMethod ? this.Model[params.data.method](params) : this.Model.getInfo(id);
+        return ret  ;
+
     }
-
-
     /* METHOD CRUD */
     async find(params){
 
       /* GOT HOOKED BEFOR : => Default schema from app main Object*/
       const schema = params.schema ;
+
+
+
       let data = await this.Model.findAndCountAll(schema);
 
       Object.assign(data,{
@@ -77,9 +86,6 @@ class iRoute extends Service {
 
       }
 
-
-
-
        return ret ;
 
     }
@@ -107,7 +113,11 @@ class iRoute extends Service {
     /* CUSTOM METHOD ON UPDATE HTTP*/
     async test(data,params){
 
-      return data;
+      let ret = await this.Model.getInfo(12);
+
+      return ret
+
+
     }
 
 
@@ -119,6 +129,7 @@ class iRoute extends Service {
     const app = options.app;
     const Model = mModel(app);
     const paginate = app.get('paginate');
+
 
     const sequelize = {
         Model,

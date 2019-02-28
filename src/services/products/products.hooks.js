@@ -33,7 +33,9 @@ module.exports = {
   before: {
     all: [ authenticate('jwt'),pluginUserInfo() ],
     find: [defautSchemaGet({Helper})],
-    get: [],
+    get: [
+      isMethod({Helper})
+    ],
     create: [
 
       defaultSchemaPost({Helper,schema:['code', 'name','type','supplier_id']}), /* this guy return err: on missing Default field */

@@ -8,9 +8,9 @@ module.exports = function (app) {
 
   // config Database
   const sequelize = app.get('sequelizeClient');
-
+  const Op = sequelize.Op
   // define table object
-  const products = sequelize.define('products',
+  const model = sequelize.define('products',
     {
 
      id:{
@@ -179,11 +179,55 @@ module.exports = function (app) {
 
               }
           }
-    }
-  )
+    },
 
-  return products;
+  );
+
+  const Product = Object.assign(model,{
+
+    maxPage:30,
 
 
+    listAll(){
+
+      return new Promise((resolve,reject)=>{
+
+        const query = "Select id from products"
+        /*sequelize.query(query, { type: sequelize.QueryTypes.SELECT}).success(function(count){
+
+            resolve(count);
+
+        }).catch(function(error){
+            //res.send('server-error', {error: error});
+        });*/
+
+        sequelize.query(query).spread((results, metadata) => {
+
+          const data = {
+            count:0,
+            rows:results
+          }
+          resolve(data);
+
+        });
+      });
+    },
+
+    getInfo(id){
+      return new Promise((resolve,reject)=>{
+
+        model.findById(id).then(idata => {
+
+          const data = idata || {}
+          resolve(data);
+
+        })
+      });
+    },
+
+
+  });
+
+  return Product;
 
 };
